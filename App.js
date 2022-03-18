@@ -2,13 +2,17 @@ import {StyleSheet, Text, View} from 'react-native';
 import Login from "./src/pages/Login";
 import SignUp from "./src/pages/SignUp";
 import Home from "./src/pages/Home";
+import ItemFullDetails from "./src/components/ItemFullDetails";
+import Profile from "./src/pages/Profile";
 
 export default function App() {
     return (
         <View style={styles.container}>
             {/*<Login/>*/}
-            <SignUp/>
+            {/*<SignUp/>*/}
             {/*<Home/>*/}
+            {/*<ItemFullDetails/>*/}
+            <Profile/>
         </View>
     );
 }
