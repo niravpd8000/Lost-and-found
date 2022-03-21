@@ -2,9 +2,9 @@ import {StyleSheet} from "react-native";
 import {Text, TouchableOpacity} from "react-native-web";
 import React from "react";
 
-const CustomButton = ({children, contained}) => {
+const CustomButton = ({children, contained,onClick}) => {
     return (
-        <TouchableOpacity style={contained && styles.button}>
+        <TouchableOpacity onPress={onClick} style={contained && styles.button}>
             <Text style={styles.buttonText}>{children}</Text>
         </TouchableOpacity>
     );

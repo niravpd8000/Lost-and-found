@@ -1,10 +1,11 @@
 import {StyleSheet, TextInput} from "react-native";
 
 const TextField = (props) => {
+    const {error} = props;
     return (
         <TextInput
-            style={styles.input}
-            placeholderTextColor="#013249"
+            style={error ? styles.error : styles.input}
+            placeholderTextColor={error ? "#702121" : "#013249"}
             {...props}
         />
     );
@@ -22,6 +23,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         padding: 20
     },
+    error: {
+        backgroundColor: "#ffafaf",
+        color: '#f34545',
+        width: "100%",
+        fontWeight: 'bold',
+        borderRadius: 25,
+        height: 50,
+        marginBottom: 20,
+        justifyContent: "center",
+        padding: 20
+    }
 });
 
 export default TextField;
