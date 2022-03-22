@@ -9,9 +9,13 @@ const ShowMoreText = ({description}) => {
         <View>
             <Text>
                 {show || description.length < 60 ? description : `${description.slice(0, 60)}...`}
-                {description.length > 60 && <TouchableOpacity onPress={() => setShow(!show)}>
-                    <Text style={styles.label}>{show ? " less" : " more"}</Text>
-                </TouchableOpacity>}
+                {description.length > 60 ?
+                    <TouchableOpacity onPress={() => setShow(!show)}>
+                        <Text style={styles.label}>{show ? " less" : " more"}</Text>
+                    </TouchableOpacity>
+                    :
+                    null
+                }
             </Text>
         </View>
     );

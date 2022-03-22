@@ -8,7 +8,7 @@ import {API} from "../API/apis";
 import ToastMessage from "../components/ToastMessage";
 
 
-export default () => {
+export default ({navigation}) => {
     const [state, setState] = React.useState({
         fullName: "",
         userName: "",
@@ -29,7 +29,6 @@ export default () => {
     ]
     const handleChange = (name, value) => {
         setState({...state, [name]: value})
-
     }
     const onCreateAccount = async () => {
         const {fullName, userName, email, role, password, confirmPassword} = state;
@@ -38,7 +37,6 @@ export default () => {
                 setErrorApi("");
             const data = {fullName, username: userName, email, role, password};
             const getResponse = (response) => {
-                console.log(response)
             }
             const getErrorMessage = (error) => {
                 setErrorApi(error)
@@ -50,11 +48,10 @@ export default () => {
             setErrorMsg("Please fill all details...");
         }
     }
-    console.log(errorMsg, error)
     return (
         <SafeAreaView style={styles.container}>
-            {error && <ToastMessage type={'error'} message={errorMsg}/>}
-            {errorApi && <ToastMessage type={'error'} message={errorApi}/>}
+            {error ? <ToastMessage type={'error'} message={errorMsg}/> : null}
+            {errorApi ? <ToastMessage type={'error'} message={errorApi}/> : null}
             <Text style={styles.label}>Lost & Found</Text>
             <View style={styles.inputContainer}>
                 {inputList.map((item, key) =>
@@ -69,7 +66,9 @@ export default () => {
                     />
                 )}
                 <CustomButton onClick={onCreateAccount} contained>SIGNUP</CustomButton>
-                <CustomButton>Login</CustomButton>
+                <CustomButton onClick={() =>
+                    navigation.navigate('Login')
+                }>Login</CustomButton>
             </View>
         </SafeAreaView>
     );
@@ -82,6 +81,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#013249'
     },
     inputContainer: {
         width: "80%",

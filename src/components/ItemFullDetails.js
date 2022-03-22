@@ -50,7 +50,6 @@ const ItemFullDetails = () => {
                         Description of the image Description of the image of the image
                     </Text>
                 </View>
-
             </View>
         </View>
     );
@@ -82,19 +81,18 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'between'
+        justifyContent: 'space-between'
     },
     detailsView: {
         width: "100%",
-        alignItems: 'left',
+        alignItems: 'flex-start',
     },
     listItem: {
         flex: 1,
-        gap: 5,
         width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'between'
+        justifyContent: 'space-between'
     },
     placeItem: {
         height: 25,

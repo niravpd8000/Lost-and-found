@@ -2,14 +2,33 @@ import * as React from 'react';
 import {Text, View, Image, StyleSheet} from "react-native";
 import CustomButton from "./CustomButton";
 import ShowMoreText from "./ShowMoreText";
+import ImageSlider from "react-native-image-slider";
+import {TouchableHighlight} from "react-native-web";
 
 const ItemCard = () => {
+    const images =
+        [
+            'http://placeimg.com/640/480/any',
+            'http://placeimg.com/640/480/any',
+            'http://placeimg.com/640/480/any'
+        ]
+
     return (
         <View style={styles.container}>
             <View>
-                <Image
-                    source={'https://media.istockphoto.com/photos/headphones-in-trippy-colors-picture-id1309150577?b=1&k=20&m=1309150577&s=170667a&w=0&h=K7HnYslGB5TYMbSvlImWfdLxGIA_m90VEafx3BQL0X8='}
-                    style={styles.image}
+                <ImageSlider
+                    loopBothSides
+                    customSlide={({index, item, style, width}) => (
+                        // It's important to put style here because it's got offset inside
+                        <View key={index} style={[style, styles.customSlide]}>
+                            <Image source={{uri: item}} style={styles.customImage}/>
+                        </View>
+                    )}
+                    images={[
+                        'http://placeimg.com/640/480/any',
+                        'http://placeimg.com/640/480/any',
+                        'http://placeimg.com/640/480/any'
+                    ]}
                 />
             </View>
             <View style={styles.details}>
@@ -33,7 +52,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "100%",
         overflow: "hidden",
-        marginTop: 20
+        marginTop: 20,
+        // boxShadow: "0px 0px 19px -10px rgba(0,0,0,0.75)"
+
     },
     image: {
         height: 200
@@ -48,7 +69,10 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'between'
+        justifyContent: 'space-between'
+    },
+    customImage: {
+        height: 200
     }
 });
 

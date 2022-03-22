@@ -13,7 +13,6 @@ export default () => {
                 <Text style={styles.label}>Nirav Dhameliya</Text>
                 <Text style={styles.subLabel}>niravpd@gmail.com</Text>
                 <View style={styles.card}>
-
                 </View>
             </View>
         </SafeAreaView>
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         height: 100,
         width: 100,
-        borderRadius: '50%'
+        borderRadius: 50
     },
     card: {
         marginTop: 20,
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
         padding: 10,
         height: 250,
         borderRadius: 15,
-        boxShadow: "0px 0px 19px -10px rgba(0,0,0,0.75)"
+        // boxShadow: "0px 0px 19px -10px rgba(0,0,0,0.75)"
     },
     label: {
         textAlign: "center",

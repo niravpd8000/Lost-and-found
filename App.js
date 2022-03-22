@@ -6,23 +6,13 @@ import ItemFullDetails from "./src/components/ItemFullDetails";
 import Profile from "./src/pages/Profile";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Main from "./src/navigation/router";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
-        <NavigationContainer>
-            {/*<StatusBar*/}
-            {/*    translucent*/}
-            {/*    barStyle={'dark-content'}*/}
-            {/*/>*/}
-            <View style={styles.container}>
-                <SignUp/>
-                {/*<Home/>*/}
-                {/*<ItemFullDetails/>*/}
-                {/*<Profile/>*/}
-            </View>
-        </NavigationContainer>
+        <Main/>
     );
 }
 
