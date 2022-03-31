@@ -10,9 +10,9 @@ const MainStack = () => {
   return (
     <Tabs.Navigator
       tabBarOptions={{
-        // activeTintColor: colors.white,
+        activeTintColor: colors.white,
         inactiveTintColor: colors.black,
-        // tabStyle: {backgroundColor: colors.white},
+        tabStyle: {backgroundColor: colors.white},
       }}
       appearance={{
         activeTabBackgrounds: [

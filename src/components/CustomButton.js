@@ -5,7 +5,7 @@ import React from "react";
 const CustomButton = ({children, contained, onClick}) => {
     return (
         <TouchableOpacity onPress={onClick} style={contained ? styles.button : {}}>
-            <Text style={styles.buttonText}>{children}</Text>
+            {children && <Text style={styles.buttonText}>{children}</Text>}
         </TouchableOpacity>
     );
 }
