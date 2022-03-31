@@ -1,5 +1,4 @@
 import React, {useRef, useEffect} from 'react';
-import {View} from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
 
 const ToastMessage = ({type, message}) => {

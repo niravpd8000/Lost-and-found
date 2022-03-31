@@ -1,15 +1,27 @@
 import * as React from 'react';
 import {Text, View, Image, StyleSheet} from "react-native";
 import CustomButton from "./CustomButton";
-import ShowMoreText from "./ShowMoreText";
+import ImageSlider from "react-native-image-slider";
 
 const ItemFullDetails = () => {
+    const images =
+        [
+            'http://placeimg.com/640/480/any',
+            'http://placeimg.com/640/480/any',
+            'http://placeimg.com/640/480/any'
+        ]
     return (
         <View style={styles.container}>
             <View>
-                <Image
-                    source={'https://media.istockphoto.com/photos/headphones-in-trippy-colors-picture-id1309150577?b=1&k=20&m=1309150577&s=170667a&w=0&h=K7HnYslGB5TYMbSvlImWfdLxGIA_m90VEafx3BQL0X8='}
-                    style={styles.image}
+                <ImageSlider
+                    loopBothSides
+                    customSlide={({index, item, style, width}) => (
+                        // It's important to put style here because it's got offset inside
+                        <View key={index} style={[style, styles.customSlide]}>
+                            <Image source={{uri: item}} style={styles.customImage}/>
+                        </View>
+                    )}
+                    images={images}
                 />
             </View>
             <View style={styles.details}>
@@ -81,7 +93,8 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 20
     },
     detailsView: {
         width: "100%",
@@ -102,6 +115,9 @@ const styles = StyleSheet.create({
         color: 'white',
         padding: 5,
         fontSize: 10
+    },
+    customImage: {
+        height: 200
     }
 });
 

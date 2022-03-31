@@ -1,13 +1,12 @@
 import React, {useState} from "react";
-import {SafeAreaView, StyleSheet, ActivityIndicator, View} from "react-native";
-import {Text, TouchableOpacity} from "react-native-web";
+import {SafeAreaView, StyleSheet, View} from "react-native";
+import {Text} from "react-native-web";
 import TextField from "../components/TextField";
 import CustomButton from "../components/CustomButton";
 import ToastMessage from "../components/ToastMessage";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
-
 
 export default ({navigation}) => {
     const [state, setState] = useState({userName: "", password: ""});
@@ -30,7 +29,8 @@ export default ({navigation}) => {
                 setErrorApi("");
             const data = {username: userName, password};
             const getResponse = (response) => {
-                login(userName, response?.data?.accessToken)
+                login(userName, response?.data?.accessToken);
+                navigation.navigate('MainStack')
             }
             const getErrorMessage = (error) => {
                 setErrorApi(error)

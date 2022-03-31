@@ -1,17 +1,19 @@
 import React from "react";
-import {SafeAreaView, StyleSheet, View} from "react-native";
+import {SafeAreaView, StyleSheet, ScrollView} from "react-native";
 import ItemCard from "../components/ItemCard";
+import ItemCardSkeleton from "../components/ItemCardSkeleton";
 
 
-export default () => {
+export default ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.itemContainer}>
-                <ItemCard/>
-                <ItemCard/>
-                <ItemCard/>
-            </View>
+            <ScrollView style={styles.itemContainer}>
+                <ItemCardSkeleton/>
+                <ItemCard onPress={() => navigation.navigate('Details')}/>
+                <ItemCard onPress={() => navigation.navigate('Details')}/>
+                <ItemCard onPress={() => navigation.navigate('Details')}/>
+            </ScrollView>
         </SafeAreaView>
     );
 };

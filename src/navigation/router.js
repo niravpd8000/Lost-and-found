@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, StatusBar, View} from 'react-native';
+import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {AuthStack, HomeStack} from './Stacks';
+import {AuthStack} from './Stacks';
 import {colors} from '../constants/colors';
 import MainStack from './MainStack';
 import {AuthContext} from "../components/Context";
@@ -52,12 +52,7 @@ const Main = () => {
         },
         loginState,
     }))
-    // if (loading)
-    //     return (
-    //         <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-    //             <ActivityIndicator size="large" color="#fb5b5a"/>
-    //         </View>
-    //     )
+    console.log("loginState.accessToken", loginState.accessToken)
     return (
         <AuthContext.Provider value={authContext}>
             <NavigationContainer>
@@ -66,9 +61,10 @@ const Main = () => {
                     backgroundColor={colors.transperent}
                     barStyle={'dark-content'}
                 />
-                <Stack.Navigator initialRouteName={"MainStack"} screenOptions={{headerShown: false}}>
+                <Stack.Navigator initialRouteName={loginState.accessToken ? "MainStack" : "Auth"}
+                                 screenOptions={{headerShown: false}}>
                     {loginState.accessToken ?
-                        <Stack.Screen name="Auth" component={HomeStack}/>
+                        <Stack.Screen name="MainStack" component={MainStack}/>
                         :
                         <Stack.Screen name="Auth" component={AuthStack}/>
                     }
