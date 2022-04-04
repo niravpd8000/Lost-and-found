@@ -1,10 +1,11 @@
 import {StyleSheet, TextInput} from "react-native";
 
 const TextField = (props) => {
-    const {error} = props;
+    const {error, multiline} = props;
     return (
         <TextInput
-            style={error ? styles.error : styles.input}
+            style={props.style || error ? styles.error : styles.input}
+            multiline={multiline}
             placeholderTextColor={error ? "#702121" : "#013249"}
             {...props}
         />

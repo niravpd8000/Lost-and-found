@@ -15,6 +15,8 @@ export default () => {
                 <View style={styles.card}>
                 </View>
             </View>
+
+
         </SafeAreaView>
     );
 };

@@ -4,6 +4,8 @@ import {HomeStack} from './Stacks';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors} from '../constants/colors';
 import Profile from "../pages/Profile";
+import ListItemFrom from "../pages/ListItemFrom";
+import ItemFullView from "../pages/ItemFullView";
 const Tabs = AnimatedTabBarNavigator();
 
 const MainStack = () => {
@@ -24,7 +26,7 @@ const MainStack = () => {
       }}>
       <Tabs.Screen
         name="Home"
-        component={HomeStack}
+        component={ItemFullView}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <Ionicons
@@ -38,8 +40,8 @@ const MainStack = () => {
         }}
       />
       <Tabs.Screen
-        name="Search"
-        component={HomeStack}
+        name="ListItemFrom"
+        component={ListItemFrom}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <Ionicons

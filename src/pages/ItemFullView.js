@@ -1,5 +1,5 @@
 import React from "react";
-import {SafeAreaView, StyleSheet, View,ScrollView} from "react-native";
+import {SafeAreaView, StyleSheet, View, ScrollView} from "react-native";
 import ItemFullDetails from "../components/ItemFullDetails";
 
 
@@ -8,9 +8,9 @@ export default () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.itemContainer}>
-            <View style={styles.itemContainer}>
-                <ItemFullDetails/>
-            </View>
+                <View style={styles.itemContainer}>
+                    <ItemFullDetails/>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );

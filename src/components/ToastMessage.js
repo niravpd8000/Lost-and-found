@@ -4,7 +4,7 @@ import DropdownAlert from 'react-native-dropdownalert';
 const ToastMessage = ({type, message}) => {
     let dropDownAlertRef = useRef();
     useEffect(() => {
-        dropDownAlertRef.alertWithType(type || 'error', 'Error', message);
+        dropDownAlertRef.alertWithType(type || 'error', 'Error', message||"Error");
     }, [])
 
     return (
