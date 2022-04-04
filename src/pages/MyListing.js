@@ -5,7 +5,6 @@ import ItemCardSkeleton from "../components/ItemCardSkeleton";
 import {getRequest, postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
-import ClaimModal from "../components/ClaimModal";
 
 export default ({navigation}) => {
     const [list, setList] = React.useState([]);
@@ -13,8 +12,6 @@ export default ({navigation}) => {
     const [errorApi, setErrorApi] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");
     const [refreshing, setRefreshing] = React.useState(false);
-    const [selectedClaimItem, setSelectedClaimItem] = React.useState(null);
-
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -35,7 +32,7 @@ export default ({navigation}) => {
             }
         }
         try {
-            await getRequest(API.GET_ITEM_LIST, getResponse, getError, loginState.accessToken)
+            await getRequest(API.GET_MY_ITEM_LISTING, getResponse, getError, loginState.accessToken)
         } catch (e) {
             console.log(e)
         }
@@ -49,18 +46,9 @@ export default ({navigation}) => {
                 />
             }>
                 {/*<ItemCardSkeleton/>*/}
-                <ClaimModal itemData={selectedClaimItem} modalVisible={!!selectedClaimItem} onClose={() => {
-                    setSelectedClaimItem(null)
-                }}/>
-                {list.map((item, key) => <ItemCard
-                        key={key}
-                        data={item}
-                        hideClaimButton={loginState?.userDetails?.id === item?.userId || item.claims.find(i => i.senderId === loginState?.userDetails?.id)}
-                        onPressClaimButton={() => {
-                            setSelectedClaimItem(item)
-                        }}
-                        onPress={() => navigation.navigate('Details', {data: item})}
-                    />
+                {list.map((item, key) => <ItemCard key={key} data={item}
+                                                   hideClaimButton={true}
+                                                   onPress={() => navigation.navigate('Details', {data: item})}/>
                 )}
             </ScrollView>
         </SafeAreaView>

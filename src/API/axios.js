@@ -1,19 +1,24 @@
 import axios from 'axios';
+import React from "react";
+import {AuthContext} from "../components/Context";
 
-export const getRequest = ({url, getResponse}) => {
-    axios.get(`http://localhost:8080/api/${url}`)
+export const getRequest = (url, getResponse, getError, token) => {
+    const headers = {
+        'x-access-token': token,
+    };
+    axios.get(`http://localhost:8080/api/${url}`, {headers})
         .then(res => {
             getResponse(res)
         })
         .catch(error => {
-            console.log(error)
+            getError(error)
         });
 }
 
 
-export const postRequest = (url, data, getResponse, getError) => {
+export const postRequest = (url, data, getResponse, getError, token) => {
     const headers = {
-        'Authorization': 'Bearer my-token',
+        'x-access-token': token,
     };
     axios.post(`http://localhost:8080/api/${url}`, data, {headers})
         .then(res => {

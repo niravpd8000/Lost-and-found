@@ -16,13 +16,15 @@ const Main = () => {
     const initialState = {
         accessToken: "",
         isLoading: false,
-        username: ""
+        userDetails: {}
     }
     useEffect(() => {
         const setLocalStorage = async () => {
             try {
-                const token = await AsyncStorage.getItem("accessToken");
-                dispatch({type: "LOGIN", username: "Nirav", accessToken: token})
+                const accessToken = await AsyncStorage.getItem("accessToken");
+                let userDetails = await AsyncStorage.getItem("userDetails");
+                userDetails = JSON.parse(userDetails);
+                dispatch({type: "LOGIN", userDetails, accessToken})
             } catch (e) {
                 console.log(e)
             }
@@ -32,27 +34,36 @@ const Main = () => {
     const loginReducer = (prevState, action) => {
         switch (action.type) {
             case 'LOGIN':
-                return {...prevState, accessToken: action.accessToken, username: action.username};
+                return {...prevState, accessToken: action.accessToken, userDetails: action.userDetails};
             case 'LOGOUT':
-                return {...prevState, accessToken: null, username: null};
+                return {...prevState, accessToken: null, userDetails: null};
             case 'PREV_STATE':
-                return {...prevState, accessToken: action.accessToken, username: action.username};
+                return {...prevState, accessToken: action.accessToken, userDetails: action.userDetails};
         }
     }
 
     const [loginState, dispatch] = React.useReducer(loginReducer, initialState);
     const authContext = React.useMemo(() => ({
-        login: async (username, accessToken) => {
+        login: async (userDetails, accessToken) => {
             try {
                 await AsyncStorage.setItem("accessToken", accessToken);
+                await AsyncStorage.setItem("userDetails", JSON.stringify(userDetails));
             } catch (e) {
                 console.log(e)
             }
-            dispatch({type: "LOGIN", username, accessToken})
+            dispatch({type: "LOGIN", userDetails: userDetails, accessToken})
         },
         loginState,
+        logout: async () => {
+            try {
+                await AsyncStorage.clear();
+            } catch (e) {
+                console.log(e)
+            }
+            dispatch({type: "LOGOUT"})
+        },
     }))
-    console.log("loginState.accessToken", loginState.accessToken)
+
     return (
         <AuthContext.Provider value={authContext}>
             <NavigationContainer>

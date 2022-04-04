@@ -8,6 +8,8 @@ import ItemFullView from "../pages/ItemFullView";
 import {Button} from "react-native";
 import ListItemFrom from "../pages/ListItemFrom";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MyListing from "../pages/MyListing";
+import ClaimedItem from "../pages/ClaimedItem";
 
 const Stack = createStackNavigator();
 
@@ -24,7 +26,7 @@ export const AuthStack = () => {
 
 export const HomeStack = ({navigation}) => {
     return (
-        <Stack.Navigator initialRouteName="ListItemFrom">
+        <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={Home} options={{
                 headerRight: ({}) => (
                     <Ionicons
@@ -37,6 +39,8 @@ export const HomeStack = ({navigation}) => {
                 ),
             }}/>
             <Stack.Screen name="Profile" component={Profile}/>
+            <Stack.Screen name="MyListing" component={MyListing}/>
+            <Stack.Screen name="ClaimedItem" component={ClaimedItem}/>
             <Stack.Screen name="Details" component={ItemFullView}/>
             <Stack.Screen name="ListItemFrom" component={ListItemFrom}/>
         </Stack.Navigator>

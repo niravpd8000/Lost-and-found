@@ -1,7 +1,11 @@
 import React from "react";
 import {SafeAreaView, StyleSheet, Text, View, Image} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import CustomButton from "../components/CustomButton";
+import {AuthContext} from "../components/Context";
 
-export default () => {
+export default ({navigation}) => {
+    const {login, logout, loginState} = React.useContext(AuthContext);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -13,10 +17,14 @@ export default () => {
                 <Text style={styles.label}>Nirav Dhameliya</Text>
                 <Text style={styles.subLabel}>niravpd@gmail.com</Text>
                 <View style={styles.card}>
+                    <CustomButton onClick={() => navigation.navigate("MyListing")} buttonColor="#765050" contained>My
+                        Listing</CustomButton>
+                    <CustomButton onClick={() => navigation.navigate("ClaimedItem")} buttonColor="#765050"
+                                  contained>Claimed</CustomButton>
+                    <CustomButton buttonColor="#765050" contained>Profile</CustomButton>
+                    <CustomButton onClick={logout} buttonColor="#765050" contained>Logout</CustomButton>
                 </View>
             </View>
-
-
         </SafeAreaView>
     );
 };

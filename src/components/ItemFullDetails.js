@@ -2,8 +2,11 @@ import * as React from 'react';
 import {Text, View, Image, StyleSheet} from "react-native";
 import CustomButton from "./CustomButton";
 import ImageSlider from "react-native-image-slider";
+import moment from "moment";
+import {AuthContext} from "./Context";
 
-const ItemFullDetails = () => {
+const ItemFullDetails = ({data}) => {
+    const {loginState} = React.useContext(AuthContext);
     const images =
         [
             'http://placeimg.com/640/480/any',
@@ -21,45 +24,48 @@ const ItemFullDetails = () => {
                             <Image source={{uri: item}} style={styles.customImage}/>
                         </View>
                     )}
-                    images={images}
+                    images={data.images}
                 />
             </View>
             <View style={styles.details}>
                 <View style={styles.header}>
                     <View style={{flex: 2}}>
-                        <Text style={styles.title}>Title</Text>
+                        <Text style={styles.title}>{data.title}</Text>
                     </View>
                     <View style={{flex: 1}}>
-                        <CustomButton contained>Claim</CustomButton>
+                        {data?.claims.find(i => i.senderId === loginState?.userDetails?.id) ?
+                            <Text>Claimed</Text> :
+                            loginState?.userDetails?.id !== data?.userId ?
+                                <CustomButton height={40} contained>Claim</CustomButton> :
+                                null
+                        }
                     </View>
                 </View>
                 <View style={styles.listItem}>
                     <Text style={styles.subTitle}>Brand Name : </Text>
-                    <Text>Apple</Text>
+                    <Text>{data.brand}</Text>
                 </View>
                 <View style={styles.listItem}>
                     <Text style={styles.subTitle}>Color : </Text>
-                    <Text>White</Text>
+                    <Text>{data.color}</Text>
                 </View>
                 <View style={styles.listItem}>
                     <Text style={styles.subTitle}>Place : </Text>
-                    <Text style={styles.placeItem}>Library</Text>
+                    <Text style={styles.placeItem}>{data.place}</Text>
                 </View>
                 <View style={styles.listItem}>
                     <Text style={styles.subTitle}>Category : </Text>
-                    <Text style={styles.placeItem}>Eletronics</Text>
-                    <Text style={styles.placeItem}>Headphone</Text>
-                    <Text style={styles.placeItem}>Iphone</Text>
-                    <Text style={styles.placeItem}>Library</Text>
+                    <Text style={styles.placeItem}>{data.category}</Text>
+                    <Text style={styles.placeItem}>{data.subCategory}</Text>
                 </View>
                 <View style={styles.listItem}>
                     <Text style={styles.subTitle}>Date : </Text>
-                    <Text>2nd Feb 2022</Text>
+                    <Text>{moment(data.createdAt).format("DD MMM YY")}</Text>
                 </View>
                 <View style={styles.detailsView}>
                     <Text style={styles.subTitle}>Description</Text>
                     <Text style={{color: "black", paddingTop: 5, flexShrink: 1}}>
-                        Description of the image Description of the image of the image
+                        {data.description}
                     </Text>
                 </View>
             </View>
@@ -104,11 +110,11 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         flexDirection: 'row',
+        marginVertical: 5,
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     placeItem: {
-        height: 25,
         borderRadius: 10,
         fontWeight: "bold",
         backgroundColor: "grey",

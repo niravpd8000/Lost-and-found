@@ -29,7 +29,10 @@ export default ({navigation}) => {
                 setErrorApi("");
             const data = {username: userName, password};
             const getResponse = (response) => {
-                login(userName, response?.data?.accessToken);
+                const token=response?.data?.accessToken;
+                response.data.accessToken=null;
+                response.data.roles=null;
+                login(response.data, token);
                 navigation.navigate('MainStack')
             }
             const getErrorMessage = (error) => {
@@ -42,7 +45,7 @@ export default ({navigation}) => {
             setErrorMsg("Please fill all details...");
         }
     }
-    return (
+        return (
         <SafeAreaView style={styles.container}>
             {error ? <ToastMessage type={'error'} message={errorMsg}/> : null}
             {errorApi ? <ToastMessage type={'error'} message={errorApi}/> : null}

@@ -1,44 +1,20 @@
 import React, {useState} from "react";
-import {SafeAreaView, StyleSheet, ScrollView, Picker, Text, View, Switch} from "react-native";
+import {SafeAreaView, StyleSheet, ScrollView, Picker, Text, View} from "react-native";
 import TextField from "../components/TextField";
 import CustomButton from "../components/CustomButton";
 import ImageUpload from "../components/ImageUpload";
-import {postRequest} from "../API/axios";
-import {API} from "../API/apis";
-import {AuthContext} from "../components/Context";
 
 export default ({}) => {
-    const {login, logout, loginState} = React.useContext(AuthContext);
     const [state, setState] = useState({
         title: "",
-        images: ["https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-blue-select-2021?wid=470&hei=556&fmt=png-alpha&.v=1645572386470"],
         place: "",
         color: "",
-        brand: "",
         category: "",
         subCategory: "",
-        description: "",
-        userId: loginState?.userDetails?.id,
-        shareContact: true
+        description: ""
     })
     const handleChange = ({name, value}) => {
         setState({...state, [name]: value})
-    }
-    const createItem = async () => {
-        const getResponse = (response) => {
-            // setList(response?.data?.data);
-        }
-        const getError = (error) => {
-            console.log("error.response.errorCode", error.response.status)
-            if (error.response.status === 401) {
-                logout()
-            }
-        }
-        try {
-            await postRequest(API.CREATE_ITEM, state, getResponse, getError, loginState.accessToken)
-        } catch (e) {
-            console.log(e)
-        }
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -53,32 +29,12 @@ export default ({}) => {
                         style={styles.inputStyle}/>
                 </View>
                 <View style={styles.box}>
-                    <Text style={styles.subTitle}>Brand : </Text>
-                    <TextField
-                        onChangeText={(value) => handleChange({name: "brand", value})}
-                        style={styles.inputStyle}/>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.subTitle}>Share Contact Details : </Text>
-                    <View style={{flex: 1}}>
-                        <Switch
-                            trackColor={{false: "#767577", true: "#81b0ff"}}
-                            thumbColor={state.shareContact ? "#f5dd4b" : "#f4f3f4"}
-                            ios_backgroundColor="#3e3e3e"
-                            style={{width: 50}}
-                            onValueChange={(value) => handleChange({name: "shareContact", value})}
-                            value={state.shareContact}
-                        />
-                    </View>
-                </View>
-                <View style={styles.box}>
                     <Text style={styles.subTitle}>Place : </Text>
                     <Picker
                         selectedValue={state.place}
                         style={{height: 50, borderColor: "white", borderRadius: 10}}
                         onValueChange={(value) => handleChange({name: "place", value})}
                     >
-                        <Picker.Item label={"Select Place"} value={""}/>
                         {campusList.map((item, key) => <Picker.Item key={key} label={item} value={item}/>)}
                     </Picker>
                 </View>
@@ -91,7 +47,6 @@ export default ({}) => {
                         itemStyle={{backgroundColor: "black"}}
 
                     >
-                        <Picker.Item label={"Select Color"} value={""}/>
                         {colors.map((item, key) => <Picker.Item color={item.toLowerCase()} key={key} label={item}
                                                                 value={item}/>)}
                     </Picker>
@@ -105,7 +60,6 @@ export default ({}) => {
                         itemStyle={{backgroundColor: "black"}}
 
                     >
-                        <Picker.Item label={"Select Category"} value={""}/>
                         {Object.keys(categories).length && Object.keys(categories).map((item, key) => <Picker.Item
                             color={item.toLowerCase()} key={key}
                             label={item}
@@ -121,7 +75,6 @@ export default ({}) => {
                         itemStyle={{backgroundColor: "black"}}
                         disabled={!state.category}
                     >
-                        <Picker.Item label={"Select Sub Category"} value={""}/>
                         {state.category && categories[state.category].length && categories[state.category].map((item, key) =>
                             <Picker.Item
                                 color={item.toLowerCase()} key={key} label={item}
@@ -138,7 +91,7 @@ export default ({}) => {
                 </View>
                 <View style={{alignItems: "center"}}>
                     <View style={{width: 200}}>
-                        <CustomButton onClick={createItem} contained>Publish</CustomButton>
+                        <CustomButton contained>Publish</CustomButton>
                     </View>
                 </View>
             </ScrollView>
@@ -180,8 +133,7 @@ const styles = StyleSheet.create({
     subTitle: {
         marginBottom: 10,
         fontSize: 14,
-        fontWeight: "bold",
-        flex: 1
+        fontWeight: "bold"
     },
     input: {
         width: "100%",

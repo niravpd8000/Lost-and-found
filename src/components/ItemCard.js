@@ -3,15 +3,18 @@ import {Text, View, Image, StyleSheet, TouchableOpacity} from "react-native";
 import CustomButton from "./CustomButton";
 import ShowMoreText from "./ShowMoreText";
 import ImageSlider from "react-native-image-slider";
+import {AuthContext} from "./Context";
 
-const ItemCard = ({onPress}) => {
+const ItemCard = ({data, onPress,onPressClaimButton,hideClaimButton}) => {
+
+
     const images =
         [
             'http://placeimg.com/640/480/any',
             'http://placeimg.com/640/480/any',
             'http://placeimg.com/640/480/any'
         ]
-
+    console.log(data)
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
             <View>
@@ -23,20 +26,20 @@ const ItemCard = ({onPress}) => {
                             <Image source={{uri: item}} style={styles.customImage}/>
                         </View>
                     )}
-                    images={images}
+                    images={data.images || []}
                 />
             </View>
             <View style={styles.details}>
                 <View style={{flex: 2}}>
-                    <Text style={styles.title}>Title</Text>
+                    <Text style={styles.title}>{data.title}</Text>
                     <Text style={{color: "black", paddingTop: 5, flexShrink: 1}}>
                         <ShowMoreText>
-                            Description of the image Description of the image of the image
+                            {data.description}
                         </ShowMoreText>
                     </Text>
                 </View>
                 <View style={{flex: 1}}>
-                    <CustomButton contained>Claim</CustomButton>
+                    {!hideClaimButton && <CustomButton onClick={onPressClaimButton} height={40} contained>Claim</CustomButton>}
                 </View>
             </View>
         </TouchableOpacity>
