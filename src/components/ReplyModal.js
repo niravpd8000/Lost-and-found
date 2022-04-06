@@ -6,16 +6,21 @@ import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "./Context";
 
-const ClaimModal = ({modalVisible, onClose, itemData}) => {
+const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
     const {logout, loginState} = React.useContext(AuthContext);
     const [state, setState] = useState({
-        message: "",
-        id: itemData?._id
+        reply: "",
+        messageId: messageData?._id,
+        itemId: itemData?._id
     })
-
+    console.log(state)
     useEffect(() => {
-        setState({...state, id: itemData?._id})
-    }, [itemData]);
+        setState({
+            ...state,
+            messageId: messageData?._id,
+            itemId: itemData?._id
+        })
+    }, [messageData, itemData]);
     const claimItem = async () => {
         const getResponse = (response) => {
             // setList(response?.data?.data);
@@ -27,7 +32,7 @@ const ClaimModal = ({modalVisible, onClose, itemData}) => {
             }
         }
         try {
-            await postRequest(API.CLAIM_ITEM, state, getResponse, getError, loginState.accessToken)
+            await postRequest(API.CLAIM_ITEM_RESPONSE, state, getResponse, getError, loginState.accessToken)
         } catch (e) {
             console.log(e)
         }
@@ -42,27 +47,17 @@ const ClaimModal = ({modalVisible, onClose, itemData}) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <ImageSlider
-                        loopBothSides
-                        customSlide={({index, item, style, width}) => (
-                            // It's important to put style here because it's got offset inside
-                            <View key={index} style={[style, styles.customSlide]}>
-                                <Image source={{uri: item}} style={styles.customImage}/>
-                            </View>
-                        )}
-                        images={itemData?.images || []}
-                    />
-                    <Text style={styles.modalText}>Write a message</Text>
+                    <Text style={styles.modalText}>Reply</Text>
                     <TextField
                         multiline={true}
                         numberOfLines={5}
-                        onChangeText={(value) => setState({...state, message: value})}
+                        onChangeText={(value) => setState({...state, reply: value})}
                         style={styles.textArea}/>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={claimItem}
                     >
-                        <Text style={styles.textStyle}>Claim</Text>
+                        <Text style={styles.textStyle}>Reply</Text>
                     </Pressable>
                 </View>
             </View>
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#EAE5E57E"
+        backgroundColor:"#EAE5E57E"
     },
     modalView: {
         margin: 20,
@@ -133,4 +128,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ClaimModal;
+export default ReplyModal;

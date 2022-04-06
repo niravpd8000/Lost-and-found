@@ -4,9 +4,14 @@ import CustomButton from "./CustomButton";
 import ImageSlider from "react-native-image-slider";
 import moment from "moment";
 import {AuthContext} from "./Context";
+import ClaimModal from "./ClaimModal";
+import ReplyModal from "./ReplyModal";
 
 const ItemFullDetails = ({data}) => {
     const {loginState} = React.useContext(AuthContext);
+    const [openClaimModal, setOpenClaimModal] = React.useState(false);
+    const [selectedMessage, setSelectedMessage] = React.useState(null);
+
     const images =
         [
             'http://placeimg.com/640/480/any',
@@ -15,6 +20,12 @@ const ItemFullDetails = ({data}) => {
         ]
     return (
         <View style={styles.container}>
+            <ReplyModal itemData={data} messageData={selectedMessage} modalVisible={!!selectedMessage} onClose={() => {
+                setSelectedMessage(null)
+            }}/>
+            <ClaimModal itemData={data} modalVisible={openClaimModal} onClose={() => {
+                setOpenClaimModal(false)
+            }}/>
             <View>
                 <ImageSlider
                     loopBothSides
@@ -29,14 +40,15 @@ const ItemFullDetails = ({data}) => {
             </View>
             <View style={styles.details}>
                 <View style={styles.header}>
-                    <View style={{flex: 2}}>
+                    <View style={{flex: 3}}>
                         <Text style={styles.title}>{data.title}</Text>
                     </View>
-                    <View style={{flex: 1}}>
+                    <View style={{flex: 1, textAlign: "right"}}>
                         {data?.claims.find(i => i.senderId === loginState?.userDetails?.id) ?
-                            <Text>Claimed</Text> :
+                            <Text style={{fontWeight: 'bold', color: 'green'}}>Claimed</Text> :
                             loginState?.userDetails?.id !== data?.userId ?
-                                <CustomButton height={40} contained>Claim</CustomButton> :
+                                <CustomButton height={40} onClick={() => setOpenClaimModal(true)}
+                                              contained>Claim</CustomButton> :
                                 null
                         }
                     </View>
@@ -50,13 +62,21 @@ const ItemFullDetails = ({data}) => {
                     <Text>{data.color}</Text>
                 </View>
                 <View style={styles.listItem}>
-                    <Text style={styles.subTitle}>Place : </Text>
-                    <Text style={styles.placeItem}>{data.place}</Text>
+                    <View style={{flex: 1}}>
+                        <Text style={styles.subTitle}>Place : </Text>
+                    </View>
+                    <View style={[styles.listItem, {flex: 2, justifyContent: "space-evenly"}]}>
+                        <Text style={styles.placeItem}>{data.place}</Text>
+                    </View>
                 </View>
                 <View style={styles.listItem}>
-                    <Text style={styles.subTitle}>Category : </Text>
-                    <Text style={styles.placeItem}>{data.category}</Text>
-                    <Text style={styles.placeItem}>{data.subCategory}</Text>
+                    <View style={{flex: 1}}>
+                        <Text style={styles.subTitle}>Category : </Text>
+                    </View>
+                    <View style={[styles.listItem, {flex: 2, justifyContent: "space-evenly"}]}>
+                        {data.category ? <Text style={styles.placeItem}>{data.category}</Text> : null}
+                        {data.subCategory ? <Text style={styles.placeItem}>{data.subCategory}</Text> : null}
+                    </View>
                 </View>
                 <View style={styles.listItem}>
                     <Text style={styles.subTitle}>Date : </Text>
@@ -64,10 +84,75 @@ const ItemFullDetails = ({data}) => {
                 </View>
                 <View style={styles.detailsView}>
                     <Text style={styles.subTitle}>Description</Text>
-                    <Text style={{color: "black", paddingTop: 5, flexShrink: 1}}>
-                        {data.description}
-                    </Text>
+                    <View style={styles.description}>
+                        <Text style={{color: "black", flexShrink: 1}}>
+                            {data.description}
+                        </Text>
+                    </View>
                 </View>
+                {loginState?.userDetails?.id !== data?.userId && data.claims.length ? <View style={styles.detailsView}>
+                    <Text style={styles.subTitle}>Claimed Message by you</Text>
+                    <View style={styles.description}>
+                        <Text style={{color: "black", flexShrink: 1}}>
+                            {data.claims[0].message}
+                        </Text>
+                    </View>
+                </View> : null
+                }
+                {loginState?.userDetails?.id === data?.userId ?
+                    <View style={{marginTop: 10}}>
+                        <Text style={styles.subTitle}>Claim Status ({data.claims.length})</Text>
+                        <View
+                            style={{
+                                borderBottomColor: 'black',
+                                borderBottomWidth: 1,
+                                marginVertical: 5
+                            }}
+                        />
+                        {data.claims.map((item, key) => <View key={key}
+                                                              style={[styles.listItem, {
+                                                                  backgroundColor: "#c2c2c2",
+                                                                  padding: 10,
+                                                                  marginBottom: 5
+                                                              }]}>
+                            <View style={{width: "100%"}}>
+                                <Text style={styles.subTitle}>Anonymous {key + 1}</Text>
+                                <View style={styles.listItem}>
+                                    <View style={{flex: 1}}>
+                                        <Text style={styles.subTitle}>Message : </Text>
+                                    </View>
+                                    <View style={[styles.listItem, {flex: 3, justifyContent: "flex-start"}]}>
+                                        <Text>{item?.message}</Text>
+                                    </View>
+                                </View>
+                                {item?.reply ?
+                                    <View style={[styles.listItem,{justifyContent: "flex-start"}]}>
+                                        <View>
+                                            <Text style={styles.subTitle}>Reply by you : </Text>
+                                        </View>
+                                        <View style={[{ justifyContent: "flex-start"}]}>
+                                            <Text>{item?.reply}</Text>
+                                        </View>
+                                    </View> :
+                                    null
+                                }
+                                <View style={[styles.listItem]}>
+                                    <View style={{flex: 1}}>
+                                        {!item?.reply ?
+                                            <CustomButton height={30} onClick={() => setSelectedMessage(item)}
+                                                          contained>Reply</CustomButton>
+                                            : null}
+                                    </View>
+                                    <View style={{flex: 1}}>
+                                        <CustomButton height={30} contained>Mark as found</CustomButton>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>)}
+                    </View>
+                    : null
+
+                }
             </View>
         </View>
     );
@@ -124,6 +209,14 @@ const styles = StyleSheet.create({
     },
     customImage: {
         height: 200
+    },
+    description: {
+        backgroundColor: "#c2c2c2",
+        width: "100%",
+        padding: 10,
+        borderRadius: 10,
+        minHeight: 40,
+        marginVertical: 10,
     }
 });
 

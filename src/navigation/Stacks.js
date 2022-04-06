@@ -5,7 +5,7 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Profile from "../pages/Profile";
 import ItemFullView from "../pages/ItemFullView";
-import {Button} from "react-native";
+import {Button, Text, View} from "react-native";
 import ListItemFrom from "../pages/ListItemFrom";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MyListing from "../pages/MyListing";
@@ -29,13 +29,37 @@ export const HomeStack = ({navigation}) => {
         <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={Home} options={{
                 headerRight: ({}) => (
-                    <Ionicons
-                        onPress={() => navigation.navigate('ListItemFrom')}
-                        style={{marginRight: 10}}
-                        name="add"
-                        size={30}
-                        color={'#fb5b5a'}
-                    />
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <Ionicons
+                            onPress={() => navigation.navigate('ListItemFrom')}
+                            style={{marginRight: 10}}
+                            name="add"
+                            size={30}
+                            color={'#fb5b5a'}
+                        />
+                        <View style={{
+                            position: "relative",
+                            marginRight: 10
+                        }}>
+                            <Text style={{
+                                fontSize: 10,
+                                position: "absolute",
+                                backgroundColor: "red",
+                                color: 'white',
+                                padding: 2,
+                                height: 15,
+                                width: 15,
+                                textAlign: "center",
+                                right: 0,
+                                borderRadius: 10,
+                            }}>1</Text>
+                            <Text style={{fontSize: 20}}>🔔</Text>
+                        </View>
+                    </View>
                 ),
             }}/>
             <Stack.Screen name="Profile" component={Profile}/>

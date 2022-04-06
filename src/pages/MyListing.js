@@ -17,7 +17,7 @@ export default ({navigation}) => {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    const {login, logout, loginState} = React.useContext(AuthContext);
+    const {logout, loginState} = React.useContext(AuthContext);
     useEffect(() => {
         getItemList();
     }, [])

@@ -5,7 +5,7 @@ import CustomButton from "../components/CustomButton";
 import {AuthContext} from "../components/Context";
 
 export default ({navigation}) => {
-    const {login, logout, loginState} = React.useContext(AuthContext);
+    const {logout} = React.useContext(AuthContext);
 
     return (
         <SafeAreaView style={styles.container}>

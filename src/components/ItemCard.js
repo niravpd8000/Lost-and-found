@@ -5,16 +5,8 @@ import ShowMoreText from "./ShowMoreText";
 import ImageSlider from "react-native-image-slider";
 import {AuthContext} from "./Context";
 
-const ItemCard = ({data, onPress,onPressClaimButton,hideClaimButton}) => {
+const ItemCard = ({data, onPress, onPressClaimButton, hideClaimButton, claimed}) => {
 
-
-    const images =
-        [
-            'http://placeimg.com/640/480/any',
-            'http://placeimg.com/640/480/any',
-            'http://placeimg.com/640/480/any'
-        ]
-    console.log(data)
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
             <View>
@@ -39,7 +31,10 @@ const ItemCard = ({data, onPress,onPressClaimButton,hideClaimButton}) => {
                     </Text>
                 </View>
                 <View style={{flex: 1}}>
-                    {!hideClaimButton && <CustomButton onClick={onPressClaimButton} height={40} contained>Claim</CustomButton>}
+                    {!hideClaimButton ?
+                        <CustomButton onClick={onPressClaimButton} height={40} contained>Claim</CustomButton>:
+                        claimed ? <Text style={{fontWeight: 'bold',textAlign:"right", color: 'green'}}>Claimed</Text> : null
+                    }
                 </View>
             </View>
         </TouchableOpacity>

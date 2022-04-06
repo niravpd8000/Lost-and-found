@@ -8,7 +8,7 @@ import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 
 export default ({}) => {
-    const {login, logout, loginState} = React.useContext(AuthContext);
+    const {logout, loginState} = React.useContext(AuthContext);
     const [state, setState] = useState({
         title: "",
         images: ["https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-blue-select-2021?wid=470&hei=556&fmt=png-alpha&.v=1645572386470"],

@@ -20,7 +20,7 @@ export default ({navigation}) => {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    const {login, logout, loginState} = React.useContext(AuthContext);
+    const {logout, loginState} = React.useContext(AuthContext);
     useEffect(() => {
         getItemList();
     }, [])
@@ -56,6 +56,7 @@ export default ({navigation}) => {
                         key={key}
                         data={item}
                         hideClaimButton={loginState?.userDetails?.id === item?.userId || item.claims.find(i => i.senderId === loginState?.userDetails?.id)}
+                        claimed={item.claims.find(i => i.senderId === loginState?.userDetails?.id)}
                         onPressClaimButton={() => {
                             setSelectedClaimItem(item)
                         }}
