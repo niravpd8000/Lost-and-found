@@ -1,16 +1,12 @@
 import React, {useEffect} from "react";
 import {SafeAreaView, StyleSheet, ScrollView, RefreshControl} from "react-native";
 import ItemCard from "../components/ItemCard";
-import ItemCardSkeleton from "../components/ItemCardSkeleton";
-import {getRequest, postRequest} from "../API/axios";
+import {getRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 
 export default ({navigation}) => {
     const [list, setList] = React.useState([]);
-    const [error, setError] = React.useState(false);
-    const [errorApi, setErrorApi] = React.useState("");
-    const [errorMsg, setErrorMsg] = React.useState("");
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -39,16 +35,19 @@ export default ({navigation}) => {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.itemContainer} refreshControl={
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                />
-            }>
-                {/*<ItemCardSkeleton/>*/}
-                {list.map((item, key) => <ItemCard key={key} data={item}
-                                                   hideClaimButton={true}
-                                                   onPress={() => navigation.navigate('Details', {data: item})}/>
+            <ScrollView
+                style={styles.itemContainer}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }>
+                {list.map((item, key) => (
+                        <ItemCard key={key} data={item}
+                                  hideClaimButton={true}
+                                  onPress={() => navigation.navigate('Details', {data: item})}/>
+                    )
                 )}
             </ScrollView>
         </SafeAreaView>

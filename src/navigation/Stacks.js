@@ -5,7 +5,7 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Profile from "../pages/Profile";
 import ItemFullView from "../pages/ItemFullView";
-import {Button, Text, View} from "react-native";
+import {Text, View} from "react-native";
 import ListItemFrom from "../pages/ListItemFrom";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MyListing from "../pages/MyListing";

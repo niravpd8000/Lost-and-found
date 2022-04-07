@@ -1,17 +1,13 @@
 import React, {useEffect} from "react";
 import {SafeAreaView, StyleSheet, ScrollView, RefreshControl} from "react-native";
 import ItemCard from "../components/ItemCard";
-import ItemCardSkeleton from "../components/ItemCardSkeleton";
-import {getRequest, postRequest} from "../API/axios";
+import {getRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 import ClaimModal from "../components/ClaimModal";
 
 export default ({navigation}) => {
     const [list, setList] = React.useState([]);
-    const [error, setError] = React.useState(false);
-    const [errorApi, setErrorApi] = React.useState("");
-    const [errorMsg, setErrorMsg] = React.useState("");
     const [refreshing, setRefreshing] = React.useState(false);
     const [selectedClaimItem, setSelectedClaimItem] = React.useState(null);
 
@@ -48,7 +44,6 @@ export default ({navigation}) => {
                     onRefresh={onRefresh}
                 />
             }>
-                {/*<ItemCardSkeleton/>*/}
                 <ClaimModal itemData={selectedClaimItem} modalVisible={!!selectedClaimItem} onClose={() => {
                     setSelectedClaimItem(null)
                 }}/>

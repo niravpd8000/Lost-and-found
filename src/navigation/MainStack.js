@@ -5,8 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors} from '../constants/colors';
 import Profile from "../pages/Profile";
 import ListItemFrom from "../pages/ListItemFrom";
-import ItemFullView from "../pages/ItemFullView";
-import Home from "../pages/Home";
+
 const Tabs = AnimatedTabBarNavigator();
 
 const MainStack = () => {

@@ -36,7 +36,7 @@ export default ({navigation}) => {
             if (errorApi)
                 setErrorApi("");
             const data = {fullName, username: userName, email, role, password};
-            const getResponse = (response) => {
+            const getResponse = () => {
             }
             const getErrorMessage = (error) => {
                 setErrorApi(error)

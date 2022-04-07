@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {Alert, Modal, StyleSheet, Text, Pressable, View, Image} from "react-native";
+import {Modal, StyleSheet, Text, Pressable, View} from "react-native";
 import TextField from "./TextField";
-import ImageSlider from "react-native-image-slider";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "./Context";
 
 const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
     const {logout, loginState} = React.useContext(AuthContext);
+    const [error, setError] = useState(false);
     const [state, setState] = useState({
         reply: "",
         messageId: messageData?._id,
@@ -21,9 +21,9 @@ const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
             itemId: itemData?._id
         })
     }, [messageData, itemData]);
-    const claimItem = async () => {
-        const getResponse = (response) => {
-            // setList(response?.data?.data);
+    const onClickReply = async () => {
+        const getResponse = () => {
+            onClose(true)
         }
         const getError = (error) => {
             console.log("error.response.errorCode", error.response.status)
@@ -32,7 +32,10 @@ const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
             }
         }
         try {
-            await postRequest(API.CLAIM_ITEM_RESPONSE, state, getResponse, getError, loginState.accessToken)
+            if (state.reply)
+                await postRequest(API.CLAIM_ITEM_RESPONSE, state, getResponse, getError, loginState.accessToken)
+            else
+                setError(true)
         } catch (e) {
             console.log(e)
         }
@@ -50,12 +53,15 @@ const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
                     <Text style={styles.modalText}>Reply</Text>
                     <TextField
                         multiline={true}
+                        placeholder={"Reply"}
+                        placeholderTextColor={!error ? "#bdbbbb" : "#989797"}
                         numberOfLines={5}
                         onChangeText={(value) => setState({...state, reply: value})}
-                        style={styles.textArea}/>
+                        style={error ? styles.textAreaError : styles.textArea}/>
+                    {error && <Text style={{color: "red"}}>Please enter valid text</Text>}
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
-                        onPress={claimItem}
+                        onPress={onClickReply}
                     >
                         <Text style={styles.textStyle}>Reply</Text>
                     </Pressable>
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor:"#EAE5E57E"
+        backgroundColor: "#EAE5E57E"
     },
     modalView: {
         margin: 20,
@@ -113,6 +119,15 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 10,
         backgroundColor: "#fbfbfb"
+    },
+    textAreaError: {
+        padding: 10,
+        width: "100%",
+        borderColor: "#f14949",
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 10,
+        backgroundColor: "#ffc2c2"
     },
     modalText: {
         marginBottom: 15,

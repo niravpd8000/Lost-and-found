@@ -8,4 +8,5 @@ export const API = {
     CLAIM_ITEM: "lostItem/claim",
     CLAIM_ITEM_RESPONSE: "lostItem/claim/response",
     CLAIM_ITEM_SUCCESS: "lostItem/claimed/success",
+    GET_CLAIM_ITEM_BY_ID: "lostItem/claimed/getById",
 }

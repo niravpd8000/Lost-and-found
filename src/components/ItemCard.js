@@ -3,7 +3,6 @@ import {Text, View, Image, StyleSheet, TouchableOpacity} from "react-native";
 import CustomButton from "./CustomButton";
 import ShowMoreText from "./ShowMoreText";
 import ImageSlider from "react-native-image-slider";
-import {AuthContext} from "./Context";
 
 const ItemCard = ({data, onPress, onPressClaimButton, hideClaimButton, claimed}) => {
 
@@ -12,8 +11,7 @@ const ItemCard = ({data, onPress, onPressClaimButton, hideClaimButton, claimed})
             <View>
                 <ImageSlider
                     loopBothSides
-                    customSlide={({index, item, style, width}) => (
-                        // It's important to put style here because it's got offset inside
+                    customSlide={({index, item, style}) => (
                         <View key={index} style={[style, styles.customSlide]}>
                             <Image source={{uri: item}} style={styles.customImage}/>
                         </View>
@@ -33,7 +31,7 @@ const ItemCard = ({data, onPress, onPressClaimButton, hideClaimButton, claimed})
                 <View style={{flex: 1}}>
                     {!hideClaimButton ?
                         <CustomButton onClick={onPressClaimButton} height={40} contained>Claim</CustomButton>:
-                        claimed ? <Text style={{fontWeight: 'bold',textAlign:"right", color: 'green'}}>Claimed</Text> : null
+                        claimed ? <Text style={{fontWeight: 'bold',textAlign:"right", color: '#240080'}}>Claimed</Text> : null
                     }
                 </View>
             </View>

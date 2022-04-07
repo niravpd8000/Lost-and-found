@@ -14,7 +14,7 @@ export default ({navigation}) => {
         {name: "userName", placeholder: "Username", value: state.userName, type: "text"},
         {name: "password", placeholder: "Password", value: state.password, type: "password"},
     ]
-    const {login, loginState} = React.useContext(AuthContext);
+    const {login} = React.useContext(AuthContext);
     const [error, setError] = React.useState(false);
     const [errorApi, setErrorApi] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");

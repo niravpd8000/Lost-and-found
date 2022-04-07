@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React from "react";
-import {AuthContext} from "../components/Context";
 
 export const getRequest = (url, getResponse, getError, token) => {
     const headers = {
