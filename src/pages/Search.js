@@ -120,11 +120,12 @@ const styles = StyleSheet.create({
         height: 64,
         justifyContent: "center",
         paddingVertical: 12,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     itemContainer: {
         width: "100%",
-        position: "relative"
+        position: "relative",
+        padding:20
     },
     subTitle: {
         marginBottom: 10,

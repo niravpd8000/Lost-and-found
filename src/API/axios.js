@@ -1,11 +1,16 @@
 import axios from 'axios';
 import React from "react";
 
+const baseUrl =
+        "https://obscure-peak-45590.herokuapp.com"
+    // "http://localhost:8080"
+;
+
 export const getRequest = (url, getResponse, getError, token) => {
     const headers = {
         'x-access-token': token,
     };
-    axios.get(`http://localhost:8080/api/${url}`, {headers})
+    axios.get(`${baseUrl}/api/${url}`, {headers})
         .then(res => {
             getResponse(res)
         })
@@ -19,7 +24,7 @@ export const postRequest = (url, data, getResponse, getError, token) => {
     const headers = {
         'x-access-token': token,
     };
-    axios.post(`http://localhost:8080/api/${url}`, data, {headers})
+    axios.post(`${baseUrl}/api/${url}`, data, {headers})
         .then(res => {
             getResponse(res)
         })
@@ -32,7 +37,7 @@ export const putRequest = ({url, data, getResponse}) => {
     const headers = {
         'Authorization': 'Bearer my-token',
     };
-    axios.put(`http://localhost:8080/api/${url}`, data, {headers})
+    axios.put(`${baseUrl}/api/${url}`, data, {headers})
         .then(res => {
             getResponse(res)
         })
