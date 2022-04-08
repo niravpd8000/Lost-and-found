@@ -1,3 +1,10 @@
+/**
+ *  file: ItemFullDetails.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-18-2022
+ *  last-modified: April-08-2022
+ */
 import * as React from 'react';
 import {Text, View, Image, StyleSheet} from "react-native";
 import CustomButton from "./CustomButton";

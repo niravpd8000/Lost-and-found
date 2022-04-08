@@ -1,3 +1,10 @@
+/**
+ *  file: ItemCardSkeleton.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-30-2022
+ *  last-modified: April-08-2022
+ */
 import * as React from 'react';
 import {StyleSheet} from "react-native";
 import SkeletonContent from 'react-native-skeleton-content';

@@ -1,3 +1,12 @@
+/**
+ *  file: ClaimedItem.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: April-04-2022
+ *  last-modified: April-08-2022
+ */
+
+
 import React, {useEffect} from "react";
 import {SafeAreaView, StyleSheet, ScrollView, RefreshControl, View, Text} from "react-native";
 import ItemCard from "../components/ItemCard";

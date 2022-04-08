@@ -1,5 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {SafeAreaView, StyleSheet, ScrollView, Picker, Text, View, Switch, TouchableOpacity} from "react-native";
+/**
+ *  file: ListItemForm.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-30-2022
+ *  last-modified: April-08-2022
+ */
+import React, {useState} from "react";
+import {SafeAreaView, StyleSheet, ScrollView, Picker, Text, View} from "react-native";
 import TextField from "../components/TextField";
 import CustomButton from "../components/CustomButton";
 import ImageUpload from "../components/ImageUpload";
@@ -7,7 +14,7 @@ import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 
-export default ({navigation}) => {
+export default ({}) => {
     const {logout, loginState} = React.useContext(AuthContext);
     const [state, setState] = useState({
         title: "",
@@ -27,7 +34,7 @@ export default ({navigation}) => {
         setState({...state, [name]: value})
     }
     const createItem = async () => {
-        const getResponse = (response) => {
+        const getResponse = () => {
             // setList(response?.data?.data);
         }
         const getError = (error) => {

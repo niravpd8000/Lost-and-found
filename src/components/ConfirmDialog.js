@@ -1,3 +1,10 @@
+/**
+ *  file: ConfirmDialog.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: April-08-2022
+ *  last-modified: April-08-2022
+ */
 import React from "react";
 import {StyleSheet, View, Text, Modal, TouchableOpacity} from "react-native";
 import CustomButton from "./CustomButton";

@@ -1,11 +1,15 @@
+/**
+ *  file: MainStack.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-22-2022
+ *  last-modified: April-08-2022
+ */
 import React from 'react';
 import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
 import {HomeStack, ProfileStack, SearchStack} from './Stacks';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors} from '../constants/colors';
-import Profile from "../pages/Profile";
-import ListItemFrom from "../pages/ListItemFrom";
-import Search from "../pages/Search";
 
 const Tabs = AnimatedTabBarNavigator();
 
@@ -35,7 +39,6 @@ const MainStack = () => {
               size={size ? size : 24}
               color={focused ? color : '#222222'}
               focused={focused}
-              color={color}
             />
           ),
         }}
@@ -50,7 +53,6 @@ const MainStack = () => {
               size={size ? size : 24}
               color={focused ? color : '#222222'}
               focused={focused}
-              color={color}
             />
           ),
         }}
@@ -65,7 +67,6 @@ const MainStack = () => {
               size={size ? size : 24}
               color={focused ? color : '#222222'}
               focused={focused}
-              color={color}
             />
           ),
         }}

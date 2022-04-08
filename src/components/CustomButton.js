@@ -1,3 +1,10 @@
+/**
+ *  file: CustomButton.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-18-2022
+ *  last-modified: April-08-2022
+ */
 import {StyleSheet} from "react-native";
 import {Text, TouchableOpacity} from "react-native-web";
 import React from "react";
