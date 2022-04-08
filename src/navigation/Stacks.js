@@ -10,6 +10,8 @@ import ListItemFrom from "../pages/ListItemFrom";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MyListing from "../pages/MyListing";
 import ClaimedItem from "../pages/ClaimedItem";
+import ProfileFrom from "../pages/ProfileFrom";
+import Search from "../pages/Search";
 
 const Stack = createStackNavigator();
 
@@ -27,46 +29,46 @@ export const AuthStack = () => {
 export const HomeStack = ({navigation}) => {
     return (
         <Stack.Navigator initialRouteName="Home">
+
             <Stack.Screen name="Home" component={Home} options={{
+                headerTitle: () => <Text
+                    style={{color: '#fb5b5a', fontWeight: 'bold', fontSize: 20}}>Lost &
+                    Found</Text>,
                 headerRight: ({}) => (
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
-                    }}>
-                        <Ionicons
-                            onPress={() => navigation.navigate('ListItemFrom')}
-                            style={{marginRight: 10}}
-                            name="add"
-                            size={30}
-                            color={'#fb5b5a'}
-                        />
-                        <View style={{
-                            position: "relative",
-                            marginRight: 10
-                        }}>
-                            <Text style={{
-                                fontSize: 10,
-                                position: "absolute",
-                                backgroundColor: "red",
-                                color: 'white',
-                                padding: 2,
-                                height: 15,
-                                width: 15,
-                                textAlign: "center",
-                                right: 0,
-                                borderRadius: 10,
-                            }}>1</Text>
-                            <Text style={{fontSize: 20}}>🔔</Text>
-                        </View>
-                    </View>
+                    <Ionicons
+                        onPress={() => navigation.navigate('Report found or lost')}
+                        style={{marginRight: 10}}
+                        name="add"
+                        size={30}
+                        color={'#fb5b5a'}
+                    />
                 ),
             }}/>
-            <Stack.Screen name="Profile" component={Profile}/>
-            <Stack.Screen name="MyListing" component={MyListing}/>
-            <Stack.Screen name="ClaimedItem" component={ClaimedItem}/>
+            <Stack.Screen name="My Listing" component={MyListing}/>
+            <Stack.Screen name="Claimed Item" component={ClaimedItem}/>
             <Stack.Screen name="Details" component={ItemFullView}/>
-            <Stack.Screen name="ListItemFrom" component={ListItemFrom}/>
+            <Stack.Screen name="Report found or lost" component={ListItemFrom}/>
+            <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
+        </Stack.Navigator>
+    );
+};
+
+
+export const SearchStack = ({navigation}) => {
+    return (
+        <Stack.Navigator initialRouteName="Search">
+            <Stack.Screen name="Search" component={Search} options={{headerShown: false}}/>
+            <Stack.Screen name="Details" component={ItemFullView}/>
+        </Stack.Navigator>
+    );
+};
+
+export const ProfileStack = ({navigation}) => {
+    return (
+        <Stack.Navigator initialRouteName="Profile">
+
+            <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
+            <Stack.Screen name="Edit Profile" component={ProfileFrom}/>
         </Stack.Navigator>
     );
 };

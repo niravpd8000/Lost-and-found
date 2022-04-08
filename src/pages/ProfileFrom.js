@@ -35,50 +35,6 @@ export default ({}) => {
                         style={{height: 50, borderColor: "white", borderRadius: 10}}
                         onValueChange={(value) => handleChange({name: "place", value})}
                     >
-                        {campusList.map((item, key) => <Picker.Item key={key} label={item} value={item}/>)}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Color : </Text>
-                    <Picker
-                        selectedValue={state.color}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "color", value})}
-                        itemStyle={{backgroundColor: "black"}}
-
-                    >
-                        {colors.map((item, key) => <Picker.Item color={item.toLowerCase()} key={key} label={item}
-                                                                value={item}/>)}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Category : </Text>
-                    <Picker
-                        selectedValue={state.category}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "category", value})}
-                        itemStyle={{backgroundColor: "black"}}
-
-                    >
-                        {Object.keys(categories).length && Object.keys(categories).map((item, key) => <Picker.Item
-                            color={item.toLowerCase()} key={key}
-                            label={item}
-                            value={item}/>)}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Sub Category : </Text>
-                    <Picker
-                        selectedValue={state.subCategory}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "subCategory", value})}
-                        itemStyle={{backgroundColor: "black"}}
-                        disabled={!state.category}
-                    >
-                        {state.category && categories[state.category].length && categories[state.category].map((item, key) =>
-                            <Picker.Item
-                                color={item.toLowerCase()} key={key} label={item}
-                                value={item}/>)}
                     </Picker>
                 </View>
                 <View style={styles.box}>

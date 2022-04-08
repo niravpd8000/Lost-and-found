@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Modal, StyleSheet, Text, Pressable, View, Image} from "react-native";
+import {Modal, StyleSheet, Text, Pressable, View, Image, TouchableOpacity} from "react-native";
 import TextField from "./TextField";
 import ImageSlider from "react-native-image-slider";
 import {postRequest} from "../API/axios";
@@ -49,8 +49,8 @@ const ClaimModal = ({modalVisible, onClose, itemData}) => {
                 visible={modalVisible}
                 onRequestClose={onClose}
             >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
+                <TouchableOpacity onPress={onClose} style={styles.centeredView}>
+                    <TouchableOpacity activeOpacity={1} style={styles.modalView}>
                         <ImageSlider
                             loopBothSides
                             customSlide={({index, item, style}) => (
@@ -73,10 +73,10 @@ const ClaimModal = ({modalVisible, onClose, itemData}) => {
                             style={[styles.button, styles.buttonClose]}
                             onPress={claimItem}
                         >
-                            <Text style={styles.textStyle}>Claim</Text>
+                            <Text style={styles.textStyle}>{itemData?.itemTypeFound ? "Claim" : "Found"}</Text>
                         </Pressable>
-                    </View>
-                </View>
+                    </TouchableOpacity>
+                </TouchableOpacity>
             </Modal>
         </>
     );

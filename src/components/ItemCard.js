@@ -4,7 +4,7 @@ import CustomButton from "./CustomButton";
 import ShowMoreText from "./ShowMoreText";
 import ImageSlider from "react-native-image-slider";
 
-const ItemCard = ({data, onPress, onPressClaimButton, hideClaimButton, claimed}) => {
+const ItemCard = ({data, onPress, itemTypeFound, onPressClaimButton, hideClaimButton, claimed}) => {
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -30,8 +30,10 @@ const ItemCard = ({data, onPress, onPressClaimButton, hideClaimButton, claimed})
                 </View>
                 <View style={{flex: 1}}>
                     {!hideClaimButton ?
-                        <CustomButton onClick={onPressClaimButton} height={40} contained>Claim</CustomButton>:
-                        claimed ? <Text style={{fontWeight: 'bold',textAlign:"right", color: '#240080'}}>Claimed</Text> : null
+                        <CustomButton onClick={onPressClaimButton} height={40}
+                                      contained>{itemTypeFound ? "Claim" : "Found"}</CustomButton> :
+                        claimed ? <Text
+                            style={{fontWeight: 'bold', textAlign: "right", color: '#240080'}}>Claimed</Text> : null
                     }
                 </View>
             </View>

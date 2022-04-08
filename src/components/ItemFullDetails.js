@@ -9,11 +9,13 @@ import ReplyModal from "./ReplyModal";
 import {useEffect} from "react";
 import {getRequest, postRequest} from "../API/axios";
 import {API} from "../API/apis";
+import ConfirmDialog from "./ConfirmDialog";
 
 const ItemFullDetails = ({data}) => {
     const {logout, loginState} = React.useContext(AuthContext);
     const [openClaimModal, setOpenClaimModal] = React.useState(false);
     const [selectedMessage, setSelectedMessage] = React.useState(null);
+    const [markSuccessMessage, setMarkSuccessMessage] = React.useState(null);
     const [state, setState] = React.useState({});
 
     useEffect(() => {
@@ -37,8 +39,10 @@ const ItemFullDetails = ({data}) => {
         }
     }
 
-    const claimItem = async (message) => {
+    const claimItem = async () => {
         const getResponse = () => {
+            setMarkSuccessMessage(null)
+            getItemById()
         }
         const getError = (error) => {
             console.log("error.response.errorCode", error.response.status)
@@ -48,7 +52,7 @@ const ItemFullDetails = ({data}) => {
         }
         try {
             await postRequest(API.CLAIM_ITEM_SUCCESS, {
-                messageId: message._id,
+                messageId: markSuccessMessage._id,
                 itemId: data?._id
             }, getResponse, getError, loginState.accessToken)
         } catch (e) {
@@ -63,11 +67,19 @@ const ItemFullDetails = ({data}) => {
                             if (refresh)
                                 getItemById()
                         }}/>
-            <ClaimModal itemData={state} modalVisible={openClaimModal} onClose={(refresh) => {
-                setOpenClaimModal(false)
-                if (refresh)
-                    getItemById()
-            }}/>
+            <ClaimModal itemData={state}
+                        modalVisible={openClaimModal}
+                        onClose={(refresh) => {
+                            setOpenClaimModal(false)
+                            if (refresh)
+                                getItemById()
+                        }}/>
+            <ConfirmDialog
+                message={"Note: you won't be able to change status after confirming..."}
+                modalVisible={markSuccessMessage}
+                onClose={() => setMarkSuccessMessage(null)}
+                onConfirm={() => claimItem()}
+            />
             <View>
                 <ImageSlider
                     loopBothSides
@@ -89,7 +101,7 @@ const ItemFullDetails = ({data}) => {
                             <Text style={{fontWeight: 'bold', color: '#240080'}}>Claimed</Text> :
                             loginState?.userDetails?.id !== state?.userId ?
                                 <CustomButton height={40} onClick={() => setOpenClaimModal(true)}
-                                              contained>Claim</CustomButton> :
+                                              contained>{data?.itemTypeFound ? "Claim" : "Found"}</CustomButton> :
                                 null
                         }
                     </View>
@@ -141,6 +153,16 @@ const ItemFullDetails = ({data}) => {
                         </View>
                     </View> : null
                 }
+                {loginState?.userDetails?.id !== state?.userId && state?.claims && state?.claims?.length && state?.claims[0].reply ?
+                    <View style={styles.detailsView}>
+                        <Text style={styles.subTitle}>Reply</Text>
+                        <View style={styles.description}>
+                            <Text style={{color: "black", flexShrink: 1}}>
+                                {state?.claims[0].reply}
+                            </Text>
+                        </View>
+                    </View> : null
+                }
                 {loginState?.userDetails?.id === state?.userId ?
                     <View style={{marginTop: 10}}>
                         <Text style={styles.subTitle}>Claim Status ({state?.claims ? state?.claims?.length : 0})</Text>
@@ -186,7 +208,7 @@ const ItemFullDetails = ({data}) => {
                                             : null}
                                     </View>
                                     <View style={{flex: 1}}>
-                                        <CustomButton height={30} onClick={() => claimItem(message)} contained>Mark as
+                                        <CustomButton height={30} onClick={() => setMarkSuccessMessage(message)} contained>Mark as
                                             found</CustomButton>
                                     </View>
                                 </View>}

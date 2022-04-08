@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Modal, StyleSheet, Text, Pressable, View} from "react-native";
+import {Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from "react-native";
 import TextField from "./TextField";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
@@ -48,12 +48,12 @@ const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
             visible={modalVisible}
             onRequestClose={onClose}
         >
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
+            <TouchableOpacity onPress={onClose} style={styles.centeredView}>
+                <TouchableOpacity activeOpacity={1} style={styles.modalView}>
                     <Text style={styles.modalText}>Reply</Text>
                     <TextField
                         multiline={true}
-                        placeholder={"Reply"}
+                        placeholder={"Reply (you can share your contact details )"}
                         placeholderTextColor={!error ? "#bdbbbb" : "#989797"}
                         numberOfLines={5}
                         onChangeText={(value) => setState({...state, reply: value})}
@@ -65,8 +65,8 @@ const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
                     >
                         <Text style={styles.textStyle}>Reply</Text>
                     </Pressable>
-                </View>
-            </View>
+                </TouchableOpacity>
+            </TouchableOpacity>
         </Modal>
     );
 };

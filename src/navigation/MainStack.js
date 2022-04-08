@@ -1,10 +1,11 @@
 import React from 'react';
 import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
-import {HomeStack} from './Stacks';
+import {HomeStack, ProfileStack, SearchStack} from './Stacks';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors} from '../constants/colors';
 import Profile from "../pages/Profile";
 import ListItemFrom from "../pages/ListItemFrom";
+import Search from "../pages/Search";
 
 const Tabs = AnimatedTabBarNavigator();
 
@@ -40,8 +41,8 @@ const MainStack = () => {
         }}
       />
       <Tabs.Screen
-        name="ListItemFrom"
-        component={ListItemFrom}
+        name="Search"
+        component={SearchStack}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <Ionicons
@@ -56,7 +57,7 @@ const MainStack = () => {
       />
       <Tabs.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileStack}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <Ionicons
