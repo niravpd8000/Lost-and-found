@@ -9,8 +9,24 @@ import {StyleSheet} from "react-native";
 import {Text, TouchableOpacity} from "react-native-web";
 import React from "react";
 
+/**
+ * CustomButton component
+ * @param children
+ * @param contained
+ * @param fontColor
+ * @param buttonColor
+ * @param onClick
+ * @param buttonStyle
+ * @param height
+ * @param disabled
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const CustomButton = ({children, contained, fontColor, buttonColor, onClick, buttonStyle, height, disabled}) => {
     const style = styles({color: buttonColor, height, fontColor});
+    /**
+     * Reusable CustomButton Component with custom style
+     */
     return (
         <TouchableOpacity onPress={onClick} style={contained ? [style.button, buttonStyle || {}] : buttonStyle || {}}
                           disabled={disabled}>
@@ -19,6 +35,14 @@ const CustomButton = ({children, contained, fontColor, buttonColor, onClick, but
     );
 }
 
+
+/**
+ *
+ * @param color
+ * @param height
+ * @param fontColor
+ * @returns {{button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number}, buttonText: {color: string, fontWeight: string}}}
+ */
 const styles = ({color, height, fontColor}) => StyleSheet.create({
     button: {
         width: "100%",

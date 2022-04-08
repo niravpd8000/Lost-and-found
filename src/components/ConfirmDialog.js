@@ -9,7 +9,19 @@ import React from "react";
 import {StyleSheet, View, Text, Modal, TouchableOpacity} from "react-native";
 import CustomButton from "./CustomButton";
 
-export default ({modalVisible, onClose, message, onConfirm}) => {
+/**
+ * ConfirmDialog component
+ * @param modalVisible
+ * @param onClose
+ * @param message
+ * @param onConfirm
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const ConfirmDialog = ({modalVisible, onClose, message, onConfirm}) => {
+    /**
+     * A modal components for confirm the actions
+     */
     return (
         <Modal
             animationType="slide"
@@ -54,6 +66,10 @@ export default ({modalVisible, onClose, message, onConfirm}) => {
     );
 };
 
+/**
+ *
+ * @type {{centeredView: {backgroundColor: string, alignItems: string, flex: number, justifyContent: string}, modalView: {elevation: number, padding: number, margin: number, backgroundColor: string, shadowRadius: number, borderRadius: number, alignItems: string, width: string, shadowOffset: {width: number, height: number}, shadowOpacity: number, shadowColor: string}}}
+ */
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
@@ -78,3 +94,5 @@ const styles = StyleSheet.create({
         elevation: 5
     },
 });
+
+export default ConfirmDialog;

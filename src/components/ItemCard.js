@@ -11,8 +11,21 @@ import CustomButton from "./CustomButton";
 import ShowMoreText from "./ShowMoreText";
 import ImageSlider from "react-native-image-slider";
 
+/**
+ * ItemCard component
+ * @param data
+ * @param onPress
+ * @param itemTypeFound
+ * @param onPressClaimButton
+ * @param hideClaimButton
+ * @param claimed
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ItemCard = ({data, onPress, itemTypeFound, onPressClaimButton, hideClaimButton, claimed}) => {
-
+    /**
+     * Reusable ItemCard Component with custom style
+     */
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
             <View>
@@ -47,7 +60,17 @@ const ItemCard = ({data, onPress, itemTypeFound, onPressClaimButton, hideClaimBu
         </TouchableOpacity>
     );
 }
-
+/**
+ *
+ * @type {{
+ * container: {elevation: number, backgroundColor: string, overflow: string, borderRadius: number, width: string, marginBottom: number,
+ * shadowOffset: {width: number, height: number}, shadowOpacity: number, shadowColor: string},
+ * image: {height: number},
+ * customImage: {height: number},
+ * details: {padding: number, alignItems: string, flex: number, flexDirection: string, width: string, justifyContent: string},
+ * title: {fontSize: number, fontWeight: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#eee",

@@ -14,8 +14,13 @@ import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import ToastMessage from "../components/ToastMessage";
 
-
-export default ({navigation}) => {
+/**
+ * SignUp
+ * @param navigation
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const SignUp = ({navigation}) => {
     const [state, setState] = React.useState({
         fullName: "",
         userName: "",
@@ -46,6 +51,20 @@ export default ({navigation}) => {
         {name: "password", placeholder: "Password", value: state.password, type: "password"},
         {name: "confirmPassword", placeholder: "Confirm Password", value: state.confirmPassword, type: "password"},
     ]
+
+    /**
+     * handleChange
+     * Purpose: This function used for handling signup form
+     * Parameter(s):
+     * Object {name,value}: object with name and value
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user fill username and password
+     */
     const handleChange = (name, value) => {
         setState({...state, [name]: value})
         if (errorMsg)
@@ -53,6 +72,21 @@ export default ({navigation}) => {
         if (error)
             setError(false)
     }
+
+    /**
+     * onCreateAccount
+     * Purpose: This function used for calling api(API.SIGN_UP) for creating new user account
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * Username, fullName, email, password and confirmPassword shouldn't be null
+     * password and confirmPassword should be same
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user clicks on Sign up button
+     */
     const onCreateAccount = async () => {
         const {fullName, userName, email, role, password, confirmPassword} = state;
         if (fullName && userName && validateEmail(email) && password && (password === confirmPassword)) {
@@ -99,6 +133,10 @@ export default ({navigation}) => {
     );
 };
 
+/**
+ * Styles
+ * @type {{container: {backgroundColor: string, alignItems: string, flex: number, width: string, justifyContent: string, maxWidth: number}, inputContainer: {alignItems: string, width: string, justifyContent: string}, label: {color: string, marginBottom: number, fontSize: number, fontWeight: string}}}
+ */
 const styles = StyleSheet.create({
     container: {
         maxWidth: 375,
@@ -120,3 +158,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
 });
+
+export default SignUp;

@@ -10,7 +10,14 @@ import {SafeAreaView, StyleSheet, Text, View, Image} from "react-native";
 import CustomButton from "../components/CustomButton";
 import {AuthContext} from "../components/Context";
 
-export default ({navigation}) => {
+/**
+ * Profile screen component
+ * @param navigation
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Profile = ({navigation}) => {
+    /** fetching states from context*/
     const {loginState, logout} = React.useContext(AuthContext);
     return (
         <SafeAreaView style={styles.container}>
@@ -36,6 +43,18 @@ export default ({navigation}) => {
     );
 };
 
+/**
+ * styles
+ * @type {{
+ * container: {backgroundColor: string, alignItems: string, flex: number, width: string, borderTopRightRadius: number, position: string, marginTop: number, borderTopLeftRadius: number},
+ * button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number},
+ * image: {borderColor: string, top: number, borderRadius: number, borderWidth: number, width: number, position: string, borderStyle: string, height: number},
+ * buttonText: {color: string, fontWeight: string},
+ * subLabel: {color: string, textAlign: string, fontSize: number, fontWeight: string},
+ * label: {color: string, textAlign: string, fontSize: number, marginTop: number, fontWeight: string},
+ * card: {padding: number, borderRadius: number, width: string, marginTop: number, height: number}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%",
@@ -88,3 +107,5 @@ const styles = StyleSheet.create({
         color: '#ede8e8', fontWeight: "500"
     }
 });
+
+export default Profile;

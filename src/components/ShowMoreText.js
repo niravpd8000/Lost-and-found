@@ -9,9 +9,19 @@ import {StyleSheet, Text, View} from "react-native";
 import {useState} from "react";
 import {TouchableOpacity} from "react-native-web";
 
+/**
+ * ShowMoreText component
+ * @param children
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ShowMoreText = ({children}) => {
+    /** initialising state */
     const [show, setShow] = useState(false);
 
+    /**
+     * Reusable ShowMoreText Component for hiding long description with show more/lees button
+     */
     return (
         <View>
             <Text>
@@ -27,6 +37,10 @@ const ShowMoreText = ({children}) => {
         </View>
     );
 }
+
+/**
+ * @type {{label: {color: string, fontWeight: string}}}
+ */
 const styles = StyleSheet.create({
     label: {
         color: "#fb5b5a",

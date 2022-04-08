@@ -14,18 +14,47 @@ import {API} from "../API/apis";
 import {AuthContext} from "./Context";
 import ToastMessage from "./ToastMessage";
 
+/**
+ * ClaimModal component
+ * @param modalVisible
+ * @param onClose
+ * @param itemData
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ClaimModal = ({modalVisible, onClose, itemData}) => {
-    const {logout, loginState} = React.useContext(AuthContext);
-    const [message, setMessage] = useState(null);
+    /** initialising states and variables */
     const [error, setError] = useState(false);
     const [state, setState] = useState({
         message: "",
         id: itemData?._id
     })
 
+    /** fetching states from context*/
+    const {logout, loginState} = React.useContext(AuthContext);
+
+
+    /** fetching states from context*/
+    const [message, setMessage] = useState(null);
+
+    /** useEffect will call when component will first time rendering and also for provided dependency */
     useEffect(() => {
         setState({...state, id: itemData?._id})
     }, [itemData]);
+
+    /**
+     * claimItem
+     * Purpose: This function used for calling api(API.CLAIM_ITEM) for claiming items
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * message state shouldn't be null
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will be called when user click on Claim/Found button
+     */
     const claimItem = async () => {
         const getResponse = () => {
             setMessage("Claimed successful!!!")
@@ -89,6 +118,23 @@ const ClaimModal = ({modalVisible, onClose, itemData}) => {
     );
 };
 
+/**
+ *
+ * @type {{
+ * button: {elevation: number, padding: number, borderRadius: number, marginTop: number},
+ * buttonOpen: {backgroundColor: string},
+ * customSlide: {width: number, height: number},
+ * buttonClose: {backgroundColor: string},
+ * centeredView: {backgroundColor: string, alignItems: string, flex: number, justifyContent: string},
+ * modalView: {elevation: number, padding: number, margin: number, backgroundColor: string, shadowRadius: number, borderRadius: number, alignItems: string, width: string,
+ * shadowOffset: {width: number, height: number}, shadowOpacity: number, shadowColor: string},
+ * customImage: {width: number, height: number},
+ * textStyle: {color: string, textAlign: string, fontWeight: string},
+ * textAreaError: {padding: number, borderColor: string, backgroundColor: string, borderRadius: number, borderWidth: number, width: string, borderStyle: string},
+ * modalText: {marginVertical: number, textAlign: string},
+ * textArea: {padding: number, borderColor: string, backgroundColor: string, borderRadius: number, borderWidth: number, width: string, borderStyle: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,

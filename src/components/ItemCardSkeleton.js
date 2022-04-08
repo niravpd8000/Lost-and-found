@@ -9,7 +9,15 @@ import * as React from 'react';
 import {StyleSheet} from "react-native";
 import SkeletonContent from 'react-native-skeleton-content';
 
+/**
+ * ItemCardSkeleton
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ItemCardSkeleton = () => {
+    /**
+     * Reusable ItemCardSkeleton Component with custom style
+     */
     return (
         <SkeletonContent
             containerStyle={styles.container}
@@ -36,12 +44,23 @@ const ItemCardSkeleton = () => {
                         {width: 105, height: 50, borderRadius: 25},
                     ]
                 },
-                    {width: 200, height: 10, marginHorizontal: 20, marginBottom: 20},
+                {width: 200, height: 10, marginHorizontal: 20, marginBottom: 20},
             ]}
         />
     );
 }
-
+/**
+ *
+ * @type {{
+ * container: {elevation: number, backgroundColor: string, overflow: string, borderRadius: number, width: string, marginBottom: number,
+ * shadowOffset: {width: number, height: number}, shadowOpacity: number, shadowColor: string},
+ * image: {height: number},
+ * customImage: {height: number},
+ * details: {padding: number, alignItems: string, flex: number, flexDirection: string, width: string, justifyContent: string},
+ * title: {fontSize: number, fontWeight: string}
+ * }}
+ *
+ */
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#eee",

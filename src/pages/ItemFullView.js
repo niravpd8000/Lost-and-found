@@ -10,8 +10,13 @@ import React from "react";
 import {SafeAreaView, StyleSheet, View, ScrollView} from "react-native";
 import ItemFullDetails from "../components/ItemFullDetails";
 
-
-export default ({route}) => {
+/**
+ * ItemFullView screen
+ * @param route
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const ItemFullView = ({route}) => {
     const {data} = route.params;
     return (
         <SafeAreaView style={styles.container}>
@@ -24,6 +29,12 @@ export default ({route}) => {
     );
 };
 
+/**
+ * @type {{
+ * container: {alignItems: string, flex: number, width: string, justifyContent: string},
+ * itemContainer: {padding: number, width: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -34,3 +45,5 @@ const styles = StyleSheet.create({
     },
 
 });
+
+export default ItemFullView;

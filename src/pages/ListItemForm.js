@@ -14,8 +14,12 @@ import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 
-export default ({}) => {
-    const {logout, loginState} = React.useContext(AuthContext);
+/**
+ * ListItemForm Screen component
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const ListItemForm = ({}) => {
     const [state, setState] = useState({
         title: "",
         type: true,
@@ -30,9 +34,39 @@ export default ({}) => {
         shareContact: true
     })
 
+    /** fetching states from context*/
+    const {logout, loginState} = React.useContext(AuthContext);
+
+    /**
+     * handleChange
+     * Purpose: This function used for handling form
+     * Parameter(s):
+     * Object {name,value}: object with name and value
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user fill the details
+     */
     const handleChange = ({name, value}) => {
         setState({...state, [name]: value})
     }
+
+    /**
+     * createItem
+     * Purpose: This function used for calling api(API.CREATE_ITEM) for creating an item
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user clicks on publish button
+     */
     const createItem = async () => {
         const getResponse = () => {
             // setList(response?.data?.data);
@@ -153,6 +187,21 @@ export default ({}) => {
     );
 };
 
+/**
+ *
+ * @type {{
+ * container: {alignItems: string, flex: number, width: string, justifyContent: string},
+ * button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number},
+ * itemContainer: {padding: number, width: string},
+ * input: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * buttonText: {color: string, fontWeight: string},
+ * subTitle: {flex: number, marginBottom: number, fontSize: number, fontWeight: string},
+ * inputStyle: {padding: number, backgroundColor: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * box: {marginVertical: number},
+ * label: {color: string, marginBottom: number, fontSize: number, fontWeight: string},
+ * textAreaStyle: {padding: number, backgroundColor: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -219,6 +268,12 @@ const styles = StyleSheet.create({
     }
 });
 
+export default ListItemForm;
+
+/**
+ * colors
+ * @type {string[]}
+ */
 const colors = [
     "White",
     "Yellow",
@@ -238,6 +293,10 @@ const colors = [
     "Charcoal"
 ]
 
+/**
+ * campusList
+ * @type {string[]}
+ */
 const campusList = [
     "Administration - Humanities Building",
     "Campion College",

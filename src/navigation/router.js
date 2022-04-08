@@ -18,12 +18,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Main = () => {
     const Stack = createStackNavigator();
 
-
+    /**
+     * initialState
+     * @type {{isLoading: boolean, accessToken: string, userDetails: {}}}
+     */
     const initialState = {
         accessToken: "",
         isLoading: false,
         userDetails: {}
     }
+    /** useEffect will call when component will first time rendering and also for provided dependency */
     useEffect(() => {
         const setLocalStorage = async () => {
             try {
@@ -37,6 +41,15 @@ const Main = () => {
         }
         setLocalStorage();
     }, [])
+
+    /**
+     * loginReducer
+     * @param prevState
+     * @param action
+     * @returns {(*&{
+     * accessToken: (string|null|string|string|*),
+     * userDetails: (null|{}|*)})|(*&{accessToken: null, userDetails: null})}
+     */
     const loginReducer = (prevState, action) => {
         switch (action.type) {
             case 'LOGIN':
@@ -48,7 +61,15 @@ const Main = () => {
         }
     }
 
+    /**
+     * initialising loginState, dispatch from useReducer for storing data
+     */
     const [loginState, dispatch] = React.useReducer(loginReducer, initialState);
+
+    /**
+     * authContext
+     * @type {{logout: function(): Promise<void>, loginState: *, login: function(*, *): Promise<void>}}
+     */
     const authContext = React.useMemo(() => ({
         login: async (userDetails, accessToken) => {
             try {

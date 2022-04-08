@@ -16,17 +16,41 @@ import ClaimModal from "../components/ClaimModal";
 import ItemCard from "../components/ItemCard";
 import {useIsFocused} from "@react-navigation/native";
 
-export default ({navigation}) => {
+/**
+ * Search screen component
+ * @param navigation
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Search = ({navigation}) => {
+    /** initialising states and variables */
     const isFocused = useIsFocused();
-    const {logout, loginState} = React.useContext(AuthContext);
     const [state, setState] = useState("")
     const [itemList, setItemList] = useState([])
     const [selectedClaimItem, setSelectedClaimItem] = React.useState(null);
 
+    /** fetching states from context*/
+    const {logout, loginState} = React.useContext(AuthContext);
+
+    /** useEffect will call when component will first time rendering and also for provided dependency */
     useEffect(() => {
         if (state)
             onClickSearch()
     }, [isFocused, state])
+
+    /**
+     * onClickSearch
+     * Purpose: This function used for calling api(API.SEARCH_ITEM) for searching items
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * search keyword state shouldn't be null
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call user types keyword
+     */
     const onClickSearch = async () => {
         const getResponse = (response) => {
             setItemList(response?.data?.data);
@@ -102,6 +126,10 @@ export default ({navigation}) => {
     );
 };
 
+/**
+ * Styles
+ * @type {{container: {alignItems: string, flex: number, width: string, justifyContent: string}, button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number}, itemContainer: {padding: number, width: string, position: string}, input: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number}, buttonText: {color: string, fontWeight: string}, subTitle: {flex: number, marginBottom: number, fontSize: number, fontWeight: string}, inputStyle: {marginRight: number, padding: number, backgroundColor: string, borderRadius: number, width: string, fontWeight: string, justifyContent: string, height: number}, label: {color: string, marginBottom: number, fontSize: number, fontWeight: string}, searchHeader: {paddingVertical: number, backgroundColor: string, alignItems: string, flexDirection: string, width: string, paddingHorizontal: number, fontWeight: string, justifyContent: string, height: number}}}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -130,7 +158,7 @@ const styles = StyleSheet.create({
     itemContainer: {
         width: "100%",
         position: "relative",
-        padding:20
+        padding: 20
     },
     subTitle: {
         marginBottom: 10,
@@ -166,3 +194,5 @@ const styles = StyleSheet.create({
         color: '#ede8e8', fontWeight: "500"
     }
 });
+
+export default Search;

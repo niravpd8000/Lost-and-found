@@ -13,6 +13,11 @@ import {colors} from '../constants/colors';
 
 const Tabs = AnimatedTabBarNavigator();
 
+/**
+ * MainStack Tab Navigation
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const MainStack = () => {
   return (
     <Tabs.Navigator

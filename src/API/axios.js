@@ -14,6 +14,22 @@ const baseUrl =
     // "http://localhost:8080"
 ;
 
+/**
+ * getRequest
+ * Purpose: This function used for calling api with get request
+ * Parameter(s):
+ * <1> url: api url
+ * <2> getResponse: for handling response
+ * <3> getError: for handling error
+ * <4> token: for authorising
+ * Precondition(s):
+ * N/A
+ *
+ * Returns: N/A
+ *
+ * Side effect:
+ * <1> This function will be call and provide response from Api
+ */
 export const getRequest = (url, getResponse, getError, token) => {
     const headers = {
         'x-access-token': token,
@@ -27,6 +43,24 @@ export const getRequest = (url, getResponse, getError, token) => {
         });
 }
 
+/**
+ * postRequest
+ * Purpose: This function used for calling api with post request
+ * Parameter(s):
+ * <1> url: api url
+ * <2> data: api payload
+ * <3> getResponse: for handling response
+ * <4> getError: for handling error
+ * <5> token: for authorising
+ *
+ * Precondition(s):
+ * N/A
+ *
+ * Returns: N/A
+ *
+ * Side effect:
+ * <1> This function will be call and provide response from Api
+ */
 
 export const postRequest = (url, data, getResponse, getError, token) => {
     const headers = {
@@ -41,7 +75,25 @@ export const postRequest = (url, data, getResponse, getError, token) => {
         });
 }
 
-export const putRequest = ({url, data, getResponse}) => {
+/**
+ * putRequest
+ * Purpose: This function used for calling api with put request
+ * Parameter(s):
+ * <1> url: api url
+ * <2> data: api payload
+ * <3> getResponse: for handling response
+ * <4> getError: for handling error
+ * <5> token: for authorising
+ *
+ * Precondition(s):
+ * N/A
+ *
+ * Returns: N/A
+ *
+ * Side effect:
+ * <1> This function will be call and provide response from Api
+ */
+export const putRequest = ({url, data, getResponse, getError, token}) => {
     const headers = {
         'Authorization': 'Bearer my-token',
     };
@@ -50,6 +102,6 @@ export const putRequest = ({url, data, getResponse}) => {
             getResponse(res)
         })
         .catch(error => {
-            console.log(error)
+            getError(error?.response?.data?.message || "Error while processing request")
         });
 }
