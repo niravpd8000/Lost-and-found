@@ -6,6 +6,7 @@
  *  last-modified: April-08-2022
  */
 
+//API constant object with API Url
 export const API = {
     SIGN_UP: "auth/signup",
     SIGN_IN: "auth/signin",

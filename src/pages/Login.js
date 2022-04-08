@@ -15,20 +15,50 @@ import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 
-export default ({navigation, route}) => {
+const Login = ({navigation, route}) => {
+    /** initialising states and variables */
     const [state, setState] = useState({userName: "", password: ""});
     const inputList = [
         {name: "userName", placeholder: "Username", value: state.userName, type: "text"},
         {name: "password", placeholder: "Password", value: state.password, type: "password"},
     ]
-    const {login} = React.useContext(AuthContext);
     const [error, setError] = React.useState(false);
     const [errorApi, setErrorApi] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");
+
+    /** fetching states from context*/
+    const {login} = React.useContext(AuthContext);
+
+    /**
+     * handleChange
+     * Purpose: This function used for handling login form
+     * Parameter(s):
+     * Object {name,value}: object with name and value
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user fill username and password
+     */
     const handleChange = (name, value) => {
         setState({...state, [name]: value})
     }
 
+    /**
+     * onClickLogin
+     * Purpose: This function used for calling api(API.SIGN_IN) for verifying username and password
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * Username and password shouldn't be null
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user clicks on login button
+     */
     const onClickLogin = async () => {
         const {userName, password} = state;
         if (userName && password) {
@@ -40,7 +70,7 @@ export default ({navigation, route}) => {
                 response.data.accessToken = null;
                 response.data.roles = null;
                 login(response.data, token);
-                navigation.navigate('MainStack',{successMessage:"Logged in successful!!!"})
+                navigation.navigate('MainStack', {successMessage: "Logged in successful!!!"})
             }
             const getErrorMessage = (error) => {
                 setErrorApi(error)
@@ -78,8 +108,17 @@ export default ({navigation, route}) => {
             </View>
         </SafeAreaView>
     );
+
 };
 
+/**
+ * styles
+ * @type {{
+ * container: {backgroundColor: string, alignItems: string, flex: number, width: string, justifyContent: string},
+ * inputContainer: {alignItems: string, width: string, justifyContent: string},
+ * label: {color: string, marginBottom: number, fontSize: number, fontWeight: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%",
@@ -100,3 +139,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
 });
+
+export default Login;

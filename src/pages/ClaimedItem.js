@@ -16,19 +16,43 @@ import {AuthContext} from "../components/Context";
 import {useIsFocused} from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export default ({navigation}) => {
+const ClaimedItem = ({navigation}) => {
+
+    /** initialising states and variables */
     const isFocused = useIsFocused();
     const [list, setList] = React.useState([]);
     const [refreshing, setRefreshing] = React.useState(false);
+
+    /**
+     * onRefresh for refreshing page
+     * @type {(function(): void)|*}
+     */
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
+    /** fetching states from context*/
     const {logout, loginState} = React.useContext(AuthContext);
+
+    /** useEffect will call when component will first time rendering and also for provided dependency */
     useEffect(() => {
         getItemList();
     }, [isFocused])
+
+    /**
+     * getItemList
+     * Purpose: This function used for calling api(API.GET_CLAIMED_ITEM_LISTING) for fetching claimed items list
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call first time when page will render and also when item claims
+     */
     const getItemList = async () => {
         const getResponse = (response) => {
             setList(response?.data?.data);
@@ -45,6 +69,7 @@ export default ({navigation}) => {
             console.log(e)
         }
     }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
@@ -76,7 +101,16 @@ export default ({navigation}) => {
         </SafeAreaView>
     );
 };
-
+/**
+ * @type {{
+ * container: {alignItems: string, flex: number, width: string, justifyContent: string},
+ * button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number},
+ * itemContainer: {padding: number, width: string},
+ * input: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * buttonText: {color: string, fontWeight: string},
+ * label: {color: string, marginBottom: number, fontSize: number, fontWeight: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -113,3 +147,5 @@ const styles = StyleSheet.create({
         color: '#ede8e8', fontWeight: "500"
     }
 });
+
+export default ClaimedItem;

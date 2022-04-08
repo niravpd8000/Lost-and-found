@@ -22,6 +22,11 @@ import Search from "../pages/Search";
 
 const Stack = createStackNavigator();
 
+/**
+ * AuthStack Stack Navigator
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const AuthStack = () => {
     return (
         <Stack.Navigator
@@ -33,6 +38,12 @@ export const AuthStack = () => {
     );
 };
 
+/**
+ * HomeStack Stack Navigator
+ * @param navigation
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const HomeStack = ({navigation}) => {
     return (
         <Stack.Navigator initialRouteName="Home">
@@ -60,7 +71,11 @@ export const HomeStack = ({navigation}) => {
     );
 };
 
-
+/**
+ * SearchStack Stack Navigator
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const SearchStack = ({}) => {
     return (
         <Stack.Navigator initialRouteName="Search">
@@ -70,6 +85,11 @@ export const SearchStack = ({}) => {
     );
 };
 
+/**
+ * ProfileStack Stack Navigator
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export const ProfileStack = ({}) => {
     return (
         <Stack.Navigator initialRouteName="Profile">

@@ -11,7 +11,14 @@ import TextField from "../components/TextField";
 import CustomButton from "../components/CustomButton";
 import ImageUpload from "../components/ImageUpload";
 
-export default ({}) => {
+/**
+ * ProfileForm screen component
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const ProfileForm = ({}) => {
+    /** initialising states */
+
     const [state, setState] = useState({
         title: "",
         place: "",
@@ -20,6 +27,20 @@ export default ({}) => {
         subCategory: "",
         description: ""
     })
+
+    /**
+     * handleChange
+     * Purpose: This function used for handling form
+     * Parameter(s):
+     * Object {name,value}: object with name and value
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user fill the details
+     */
     const handleChange = ({name, value}) => {
         setState({...state, [name]: value})
     }
@@ -62,6 +83,20 @@ export default ({}) => {
     );
 };
 
+/**
+ * styles
+ * @type {{
+ * container: {alignItems: string, flex: number, width: string, justifyContent: string},
+ * button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number},
+ * itemContainer: {padding: number, width: string},
+ * input: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * buttonText: {color: string, fontWeight: string},
+ * subTitle: {marginBottom: number, fontSize: number, fontWeight: string},
+ * inputStyle: {padding: number, backgroundColor: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * box: {marginVertical: number},
+ * label: {color: string, marginBottom: number, fontSize: number, fontWeight: string},
+ * textAreaStyle: {padding: number, backgroundColor: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number}}}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -126,3 +161,5 @@ const styles = StyleSheet.create({
         color: '#ede8e8', fontWeight: "500"
     }
 });
+
+export default ProfileForm;

@@ -18,17 +18,40 @@ import {getRequest, postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import ConfirmDialog from "./ConfirmDialog";
 
+/**
+ * ItemFullDetails component
+ * @param data
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ItemFullDetails = ({data}) => {
-    const {logout, loginState} = React.useContext(AuthContext);
+    /** initialising states and variables */
     const [openClaimModal, setOpenClaimModal] = React.useState(false);
     const [selectedMessage, setSelectedMessage] = React.useState(null);
     const [markSuccessMessage, setMarkSuccessMessage] = React.useState(null);
     const [state, setState] = React.useState({});
 
+    /** fetching states from context*/
+    const {logout, loginState} = React.useContext(AuthContext);
+
+    /** useEffect will call when component will first time rendering and also for provided dependency */
     useEffect(() => {
         getItemById()
     }, [])
 
+    /**
+     * getItemById
+     * Purpose: This function used for calling api(API.CLAIM_ITEM) for fetching item details by ID
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * item ID shouldn't be null
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call first time when page will render and also when item details modify
+     */
     const getItemById = async () => {
         const getResponse = (response) => {
             setState(response?.data?.data);
@@ -46,6 +69,19 @@ const ItemFullDetails = ({data}) => {
         }
     }
 
+    /**
+     * claimItem
+     * Purpose: This function used for calling api(API.CLAIM_ITEM) for claiming items
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * message state shouldn't be null
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will be called when user click on Claim/Found button
+     */
     const claimItem = async () => {
         const getResponse = () => {
             setMarkSuccessMessage(null)
@@ -66,6 +102,7 @@ const ItemFullDetails = ({data}) => {
             console.log(e)
         }
     }
+
     return (
         <View style={styles.container}>
             <ReplyModal itemData={state} messageData={selectedMessage} modalVisible={!!selectedMessage}
@@ -229,7 +266,22 @@ const ItemFullDetails = ({data}) => {
         </View>
     );
 }
-
+/**
+ *
+ * @type {{
+ * container: {backgroundColor: string, overflow: string, width: string},
+ * image: {height: number},
+ * listItem: {alignItems: string, marginVertical: number, flex: number, flexDirection: string, width: string, justifyContent: string},
+ * subTitle: {fontSize: number, fontWeight: string},
+ * placeItem: {padding: number, backgroundColor: string, borderRadius: number, color: string, fontSize: number, fontWeight: string},
+ * header: {alignItems: string, flex: number, flexDirection: string, width: string, marginBottom: number, justifyContent: string},
+ * customImage: {height: number},
+ * description: {minHeight: number, padding: number, backgroundColor: string, borderRadius: number, marginVertical: number, width: string},
+ * details: {padding: number},
+ * title: {fontSize: number, fontWeight: string},
+ * detailsView: {alignItems: string, width: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#eee",

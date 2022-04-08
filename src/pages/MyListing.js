@@ -14,7 +14,13 @@ import {AuthContext} from "../components/Context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {useIsFocused} from "@react-navigation/native";
 
-export default ({navigation}) => {
+/**
+ * MyListing screen component
+ * @param navigation
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const MyListing = ({navigation}) => {
     const isFocused = useIsFocused();
     const [list, setList] = React.useState([]);
     const [refreshing, setRefreshing] = React.useState(false);
@@ -23,10 +29,26 @@ export default ({navigation}) => {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
+    /** fetching states from context*/
     const {logout, loginState} = React.useContext(AuthContext);
+    /** useEffect will call when component will first time rendering and also for provided dependency */
     useEffect(() => {
         getItemList();
     }, [isFocused])
+
+    /**
+     * getItemList
+     * Purpose: This function used for calling api(API.GET_MY_ITEM_LISTING) for fetching user listed items
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call first time when page will render and also when item claims
+     */
     const getItemList = async () => {
         const getResponse = (response) => {
             setList(response?.data?.data);
@@ -54,7 +76,7 @@ export default ({navigation}) => {
                 {!list.length &&
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
                         <Ionicons
-                            onPress={()=>navigation.navigate("Report found or lost")}
+                            onPress={() => navigation.navigate("Report found or lost")}
                             name="add"
                             size={100}
                             color={'#fb5b5a'}
@@ -71,6 +93,17 @@ export default ({navigation}) => {
     );
 };
 
+/**
+ * styles
+ * @type {{
+ * container: {alignItems: string, flex: number, width: string, justifyContent: string},
+ * button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number},
+ * itemContainer: {padding: number, width: string},
+ * input: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * buttonText: {color: string, fontWeight: string},
+ * label: {color: string, marginBottom: number, fontSize: number, fontWeight: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -107,3 +140,5 @@ const styles = StyleSheet.create({
         color: '#ede8e8', fontWeight: "500"
     }
 });
+
+export default MyListing;

@@ -6,6 +6,9 @@
  *  last-modified: April-08-2022
  */
 
+/**
+ * @type {{white: string, black: string, primary: string}}
+ */
 export const colors = {
     black: '#000000',
     white: '#ffffff',

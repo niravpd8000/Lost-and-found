@@ -15,7 +15,14 @@ import ClaimModal from "../components/ClaimModal";
 import {useIsFocused} from "@react-navigation/native";
 import ToastMessage from "../components/ToastMessage";
 
-export default ({navigation, route}) => {
+/**
+ * Home screen component
+ * @param navigation
+ * @param route
+ * @returns {JSX.Element}
+ */
+const Home = ({navigation, route}) => {
+    /** initialising states and variables */
     const isFocused = useIsFocused();
     const [list, setList] = React.useState([]);
     const [filteredList, setFilteredList] = React.useState([]);
@@ -23,15 +30,35 @@ export default ({navigation, route}) => {
     const [selectedTab, setSelectedTab] = React.useState("All");
     const [selectedClaimItem, setSelectedClaimItem] = React.useState(null);
 
+    /**
+     * onRefresh for refreshing page
+     * @type {(function(): void)|*}
+     */
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
     }, []);
-
+    /** fetching states from context*/
     const {logout, loginState} = React.useContext(AuthContext);
+    /** useEffect will call when component will first time rendering and also for provided dependency */
     useEffect(() => {
         getItemList();
     }, [isFocused])
+
+
+    /**
+     * getItemList
+     * Purpose: This function used for calling api(API.GET_CLAIMED_ITEM_LISTING) for fetching items list
+     * Parameter(s):
+     * N/A
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call first time when page will render and also when item claims
+     */
     const getItemList = async () => {
         const getResponse = (response) => {
             setList(response?.data?.data);
@@ -49,6 +76,20 @@ export default ({navigation, route}) => {
             console.log(e)
         }
     }
+
+    /**
+     * onClickTab
+     * Purpose: This function is used for filtering items list by type All, lost or report
+     * Parameter(s):
+     * <1> type: type All, lost or report
+     * Precondition(s):
+     * N/A
+     *
+     * Returns: N/A
+     *
+     * Side effect:
+     * <1> This function will call when user clicks on these tabs All, lost or report
+     */
     const onClickTab = (type) => {
         if (type === "All")
             setFilteredList(list)
@@ -101,6 +142,20 @@ export default ({navigation, route}) => {
     );
 };
 
+
+/**
+ *
+ * @type {{
+ * container: {alignItems: string, flex: number, width: string, justifyContent: string},
+ * button: {backgroundColor: string, borderRadius: number, alignItems: string, width: string, marginBottom: number, justifyContent: string, marginTop: number, height: number},
+ * itemContainer: {padding: number, width: string},
+ * input: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * buttonText: {color: string, fontWeight: string},
+ * tab: {backgroundColor: string, color: string, alignItems: string, borderRadius: number, flex: number, justifyContent: string},
+ * label: {color: string, marginBottom: number, fontSize: number, fontWeight: string},
+ * selectedTab: {backgroundColor: string, color: string, alignItems: string, borderRadius: number, flex: number, justifyContent: string}
+ * }}
+ */
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
@@ -153,3 +208,5 @@ const styles = StyleSheet.create({
         color: '#ede8e8', fontWeight: "500"
     }
 });
+
+export default Home;

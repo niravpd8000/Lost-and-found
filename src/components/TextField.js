@@ -7,8 +7,17 @@
  */
 import {StyleSheet, TextInput} from "react-native";
 
+/**
+ * TextField component
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const TextField = (props) => {
     const {error, multiline} = props;
+    /**
+     * Reusable TextField Component with custom style and type multiline for text area
+     */
     return (
         <TextInput
             style={props.style || error ? styles.error : styles.input}
@@ -19,6 +28,11 @@ const TextField = (props) => {
     );
 }
 
+/**
+ * @type {{
+ * input: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number},
+ * error: {padding: number, backgroundColor: string, color: string, borderRadius: number, width: string, marginBottom: number, fontWeight: string, justifyContent: string, height: number}}}
+ */
 const styles = StyleSheet.create({
     input: {
         width: "100%",
