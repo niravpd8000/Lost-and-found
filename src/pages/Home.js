@@ -99,6 +99,24 @@ const Home = ({navigation, route}) => {
     }
     return (
         <SafeAreaView style={styles.container}>
+            <View style={{
+                flexDirection: 'row',
+                width: "100%",
+                height: 30,
+                paddingHorizontal: 20,
+                marginBottom: 10,
+                marginTop:20
+            }}>
+                <TouchableOpacity onPress={() => onClickTab("All")}
+                                  style={selectedTab === "All" ? styles.selectedTab : styles.tab}><Text
+                    style={{fontWeight: "bold"}}>All</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => onClickTab("Lost")}
+                                  style={selectedTab === "Lost" ? styles.selectedTab : styles.tab}><Text
+                    style={{fontWeight: "bold"}}>Lost</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => onClickTab("Found")}
+                                  style={selectedTab === "Found" ? styles.selectedTab : styles.tab}><Text
+                    style={{fontWeight: "bold"}}>Found</Text></TouchableOpacity>
+            </View>
             <ScrollView style={styles.itemContainer} refreshControl={
                 <RefreshControl
                     refreshing={refreshing}
@@ -107,19 +125,6 @@ const Home = ({navigation, route}) => {
             }>
                 {route.params?.successMessage ?
                     <ToastMessage type={'success'} message={route.params?.successMessage}/> : null}
-                <View style={{
-                    flexDirection: 'row',
-                    width: "100%",
-                    height: 30,
-                    marginBottom: 10
-                }}>
-                    <TouchableOpacity onPress={() => onClickTab("All")}
-                                      style={selectedTab === "All" ? styles.selectedTab : styles.tab}><Text>All</Text></TouchableOpacity>
-                    <TouchableOpacity onPress={() => onClickTab("Lost")}
-                                      style={selectedTab === "Lost" ? styles.selectedTab : styles.tab}><Text>Lost</Text></TouchableOpacity>
-                    <TouchableOpacity onPress={() => onClickTab("Found")}
-                                      style={selectedTab === "Found" ? styles.selectedTab : styles.tab}><Text>Found</Text></TouchableOpacity>
-                </View>
                 <ClaimModal itemData={selectedClaimItem} modalVisible={!!selectedClaimItem} onClose={(refresh) => {
                     setSelectedClaimItem(null)
                     if (refresh)

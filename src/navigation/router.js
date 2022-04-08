@@ -5,11 +5,11 @@
  *  date-created: March-22-2022
  *  last-modified: April-08-2022
  */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {AuthStack} from './Stacks';
+import {AuthStack, introScreen} from './Stacks';
 import {colors} from '../constants/colors';
 import MainStack from './MainStack';
 import {AuthContext} from "../components/Context";
@@ -17,7 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
     const Stack = createStackNavigator();
-
+    const [introDisplay, setIntroDisplay] = useState(true)
     /**
      * initialState
      * @type {{isLoading: boolean, accessToken: string, userDetails: {}}}
@@ -42,6 +42,11 @@ const Main = () => {
         setLocalStorage();
     }, [])
 
+    useEffect(() => {
+        setTimeout(() => {
+            setIntroDisplay(false)
+        }, 3000)
+    }, [])
     /**
      * loginReducer
      * @param prevState
@@ -101,10 +106,11 @@ const Main = () => {
                 />
                 <Stack.Navigator initialRouteName={loginState.accessToken ? "MainStack" : "Auth"}
                                  screenOptions={{headerShown: false}}>
-                    {loginState.accessToken ?
-                        <Stack.Screen name="MainStack" component={MainStack}/>
-                        :
-                        <Stack.Screen name="Auth" component={AuthStack}/>
+                    {introDisplay ? <Stack.Screen name="MainStack" component={introScreen}/>
+                        : loginState.accessToken ?
+                            <Stack.Screen name="MainStack" component={MainStack}/>
+                            :
+                            <Stack.Screen name="Auth" component={AuthStack}/>
                     }
                 </Stack.Navigator>
             </NavigationContainer>
