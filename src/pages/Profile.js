@@ -1,12 +1,10 @@
 import React from "react";
 import {SafeAreaView, StyleSheet, Text, View, Image} from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomButton from "../components/CustomButton";
 import {AuthContext} from "../components/Context";
 
 export default ({navigation}) => {
-    const {login, logout, loginState} = React.useContext(AuthContext);
-
+    const {loginState, logout} = React.useContext(AuthContext);
     return (
         <SafeAreaView style={styles.container}>
             <Image
@@ -14,14 +12,16 @@ export default ({navigation}) => {
                 style={styles.image}
             />
             <View style={{width: "100%", padding: "20px"}}>
-                <Text style={styles.label}>Nirav Dhameliya</Text>
-                <Text style={styles.subLabel}>niravpd@gmail.com</Text>
+                <Text
+                    style={styles.label}>{loginState?.userDetails?.fullName ? loginState?.userDetails?.fullName : "User"}</Text>
+                <Text style={styles.subLabel}>{loginState?.userDetails?.email}</Text>
                 <View style={styles.card}>
-                    <CustomButton onClick={() => navigation.navigate("MyListing")} buttonColor="#765050" contained>My
+                    <CustomButton onClick={() => navigation.navigate("My Listing")} buttonColor="#765050" contained>My
                         Listing</CustomButton>
-                    <CustomButton onClick={() => navigation.navigate("ClaimedItem")} buttonColor="#765050"
+                    <CustomButton onClick={() => navigation.navigate("Claimed Item")} buttonColor="#765050"
                                   contained>Claimed</CustomButton>
-                    <CustomButton buttonColor="#765050" contained>Profile</CustomButton>
+                    <CustomButton onClick={() => navigation.navigate("Edit Profile")}
+                                  buttonColor="#765050" contained>Profile</CustomButton>
                     <CustomButton onClick={logout} buttonColor="#765050" contained>Logout</CustomButton>
                 </View>
             </View>
@@ -81,5 +81,3 @@ const styles = StyleSheet.create({
         color: '#ede8e8', fontWeight: "500"
     }
 });
-
-const campusList = ["Administration - Humanities Building", "Campion College", "Centre for Kinesiology, Health and Sport", "Classroom Building", "College West Building", "Day Care", "Dr. John Archer Library", "Dr. William Riddell Centre", "Education Auditorium", "Education Building", "First Nations University of Canada", "Greenhouse Gas Technology Centre", "Heating Plant", "Kīšik Towers", "Laboratory Building", "La Cité", "Luther College", "Paskwāw Tower", "Research and Innovation Centre", "Wakpá Tower",]

@@ -20,23 +20,40 @@ export default ({navigation}) => {
     const [error, setError] = React.useState(false);
     const [errorApi, setErrorApi] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");
+    const validateEmail = (email) => {
+        return email.toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    }
     const inputList = [
         {name: "fullName", placeholder: "Full Name", value: state.fullName, type: "text"},
         {name: "userName", placeholder: "Username", value: state.userName, type: "text"},
-        {name: "email", placeholder: "Email", value: state.email, type: "email"},
+        {
+            name: "email",
+            placeholder: "Email",
+            value: state.email,
+            type: "email",
+            error: (email) => validateEmail(email)
+        },
         {name: "password", placeholder: "Password", value: state.password, type: "password"},
         {name: "confirmPassword", placeholder: "Confirm Password", value: state.confirmPassword, type: "password"},
     ]
     const handleChange = (name, value) => {
         setState({...state, [name]: value})
+        if (errorMsg)
+            setErrorMsg("");
+        if (error)
+            setError(false)
     }
     const onCreateAccount = async () => {
         const {fullName, userName, email, role, password, confirmPassword} = state;
-        if (fullName && userName && email && password && (password === confirmPassword)) {
+        if (fullName && userName && validateEmail(email) && password && (password === confirmPassword)) {
             if (errorApi)
                 setErrorApi("");
             const data = {fullName, username: userName, email, role, password};
-            const getResponse = (response) => {
+            const getResponse = () => {
+                navigation.navigate('Login', {successMessage: "Sign Up successful!!!"})
             }
             const getErrorMessage = (error) => {
                 setErrorApi(error)
@@ -45,7 +62,8 @@ export default ({navigation}) => {
             await postRequest(API.SIGN_UP, data, getResponse, getErrorMessage)
         } else {
             setError(true);
-            setErrorMsg("Please fill all details...");
+            let message = password !== confirmPassword ? "Passwords dont matches" : !validateEmail(email) ? "Please enter valid email" : "Please fill all details...";
+            setErrorMsg(message);
         }
     }
     return (
@@ -56,7 +74,7 @@ export default ({navigation}) => {
             <View style={styles.inputContainer}>
                 {inputList.map((item, key) =>
                     <TextField
-                        error={error && !item.value}
+                        error={item?.error ? error && !item?.error(item.value) : error && !item.value}
                         key={key}
                         name={item.name}
                         secureTextEntry={item.type === "password"}

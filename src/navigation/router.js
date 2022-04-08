@@ -9,7 +9,6 @@ import {AuthContext} from "../components/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
-    const [loading, setLoading] = useState(false);
     const Stack = createStackNavigator();
 
 

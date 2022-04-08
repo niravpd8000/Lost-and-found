@@ -6,29 +6,25 @@ import ImageUpload from "../components/ImageUpload";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import ClaimModal from "../components/ClaimModal";
+import ItemCard from "../components/ItemCard";
+import {useIsFocused} from "@react-navigation/native";
 
 export default ({navigation}) => {
+    const isFocused = useIsFocused();
     const {logout, loginState} = React.useContext(AuthContext);
-    const [state, setState] = useState({
-        title: "",
-        type: true,
-        images: ["https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-blue-select-2021?wid=470&hei=556&fmt=png-alpha&.v=1645572386470"],
-        place: "",
-        color: "",
-        brand: "",
-        category: "",
-        subCategory: "",
-        description: "",
-        userId: loginState?.userDetails?.id,
-        shareContact: true
-    })
+    const [state, setState] = useState("")
+    const [itemList, setItemList] = useState([])
+    const [selectedClaimItem, setSelectedClaimItem] = React.useState(null);
 
-    const handleChange = ({name, value}) => {
-        setState({...state, [name]: value})
-    }
-    const createItem = async () => {
+    useEffect(() => {
+        if (state)
+            onClickSearch()
+    }, [isFocused, state])
+    const onClickSearch = async () => {
         const getResponse = (response) => {
-            // setList(response?.data?.data);
+            setItemList(response?.data?.data);
         }
         const getError = (error) => {
             console.log("error.response.errorCode", error.response.status)
@@ -37,110 +33,65 @@ export default ({navigation}) => {
             }
         }
         try {
-            await postRequest(API.CREATE_ITEM, state, getResponse, getError, loginState.accessToken)
+            if (state)
+                await postRequest(API.SEARCH_ITEM, {searchKey: state}, getResponse, getError, loginState.accessToken)
+            else setItemList([])
         } catch (e) {
             console.log(e)
         }
     }
+
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.searchHeader}>
+                <TextField
+                    placeholder={"Search..."}
+                    placeholderTextColor={"#989797"}
+                    style={styles.inputStyle} onChangeText={setState}/>
+                <TouchableOpacity onPress={onClickSearch}>
+                    <Ionicons
+                        name="search"
+                        size={24}
+                        color={'#222222'}
+                    />
+                </TouchableOpacity>
+            </View>
             <ScrollView style={styles.itemContainer}>
-                <View style={styles.box}>
-                    <ImageUpload/>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Title : </Text>
-                    <TextField
-                        onChangeText={(value) => handleChange({name: "title", value})}
-                        style={styles.inputStyle}/>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Type : </Text>
-                    <Picker
-                        selectedValue={state.type}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "type", value})}
-                    >
-                        <Picker.Item label={"Found"} value={true}/>
-                        <Picker.Item label={"Lost"} value={false}/>
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Brand : </Text>
-                    <TextField
-                        onChangeText={(value) => handleChange({name: "brand", value})}
-                        style={styles.inputStyle}/>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Place : </Text>
-                    <Picker
-                        selectedValue={state.place}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "place", value})}
-                    >
-                        <Picker.Item label={"Select Place"} value={""}/>
-                        {campusList.map((item, key) => <Picker.Item key={key} label={item} value={item}/>)}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Color : </Text>
-                    <Picker
-                        selectedValue={state.color}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "color", value})}
-                        itemStyle={{backgroundColor: "black"}}
-
-                    >
-                        <Picker.Item label={"Select Color"} value={""}/>
-                        {colors.map((item, key) => <Picker.Item color={item.toLowerCase()} key={key} label={item}
-                                                                value={item}/>)}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Category : </Text>
-                    <Picker
-                        selectedValue={state.category}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "category", value})}
-                        itemStyle={{backgroundColor: "black"}}
-
-                    >
-                        <Picker.Item label={"Select Category"} value={""}/>
-                        {Object.keys(categories).length && Object.keys(categories).map((item, key) => <Picker.Item
-                            color={item.toLowerCase()} key={key}
-                            label={item}
-                            value={item}/>)}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Sub Category : </Text>
-                    <Picker
-                        selectedValue={state.subCategory}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "subCategory", value})}
-                        itemStyle={{backgroundColor: "black"}}
-                        disabled={!state.category}
-                    >
-                        <Picker.Item label={"Select Sub Category"} value={""}/>
-                        {state.category && categories[state.category].length && categories[state.category].map((item, key) =>
-                            <Picker.Item
-                                color={item.toLowerCase()} key={key} label={item}
-                                value={item}/>)}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Description : </Text>
-                    <TextField
-                        onChangeText={(value) => handleChange({name: "description", value})}
-                        multiline={true}
-                        numberOfLines={5}
-                        style={styles.textAreaStyle}/>
-                </View>
-                <View style={{alignItems: "center"}}>
-                    <View style={{width: 200}}>
-                        <CustomButton onClick={createItem} contained>Publish</CustomButton>
-                    </View>
-                </View>
+                {!itemList.length && !state &&
+                    <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
+                        <Ionicons
+                            name="search"
+                            size={100}
+                            color={'#cfcfcf'}
+                        />
+                        <Text style={{color: "#cfcfcf"}}>Search the thing you have lost... </Text>
+                    </View>}
+                {!itemList.length && state &&
+                    <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
+                        <Ionicons
+                            name="post"
+                            size={100}
+                            color={'#cfcfcf'}
+                        />
+                        <Text style={{color: "#cfcfcf"}}>Result not available</Text>
+                        <Text style={{color: "#cfcfcf"}}>Please search with new keyword</Text>
+                    </View>}
+                <ClaimModal itemData={selectedClaimItem} modalVisible={!!selectedClaimItem} onClose={(refresh) => {
+                    setSelectedClaimItem(null)
+                    if (refresh)
+                        onClickSearch()
+                }}/>
+                {itemList.map((item, key) => <ItemCard
+                        key={key}
+                        data={item}
+                        hideClaimButton={loginState?.userDetails?.id === item?.userId || item.claims.find(i => i.senderId === loginState?.userDetails?.id)}
+                        claimed={item.claims.find(i => i.senderId === loginState?.userDetails?.id)}
+                        onPressClaimButton={() => {
+                            setSelectedClaimItem(item)
+                        }}
+                        onPress={() => navigation.navigate('Details', {data: item})}
+                    />
+                )}
             </ScrollView>
         </SafeAreaView>
     );
@@ -150,32 +101,31 @@ const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
     },
-    box: {
-        marginVertical: 10
-    },
     inputStyle: {
         width: "100%",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#ede9e9",
         fontWeight: 'bold',
-        borderRadius: 5,
-        height: 50,
-        marginBottom: 20,
+        borderRadius: 15,
+        height: 40,
+        marginRight: 15,
         justifyContent: "center",
         padding: 20
     },
-    textAreaStyle: {
+    searchHeader: {
+        flexDirection: 'row',
+        alignItems: "center",
         width: "100%",
         backgroundColor: "#ffffff",
         fontWeight: 'bold',
-        borderRadius: 5,
-        height: 100,
-        marginBottom: 20,
+        height: 64,
         justifyContent: "center",
-        padding: 20
+        paddingVertical: 12,
+        paddingHorizontal: 20,
     },
     itemContainer: {
-        padding: 10,
         width: "100%",
+        position: "relative",
+        padding:20
     },
     subTitle: {
         marginBottom: 10,

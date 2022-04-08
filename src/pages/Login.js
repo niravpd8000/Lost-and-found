@@ -8,13 +8,13 @@ import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 
-export default ({navigation}) => {
+export default ({navigation, route}) => {
     const [state, setState] = useState({userName: "", password: ""});
     const inputList = [
         {name: "userName", placeholder: "Username", value: state.userName, type: "text"},
         {name: "password", placeholder: "Password", value: state.password, type: "password"},
     ]
-    const {login, loginState} = React.useContext(AuthContext);
+    const {login} = React.useContext(AuthContext);
     const [error, setError] = React.useState(false);
     const [errorApi, setErrorApi] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");
@@ -29,11 +29,11 @@ export default ({navigation}) => {
                 setErrorApi("");
             const data = {username: userName, password};
             const getResponse = (response) => {
-                const token=response?.data?.accessToken;
-                response.data.accessToken=null;
-                response.data.roles=null;
+                const token = response?.data?.accessToken;
+                response.data.accessToken = null;
+                response.data.roles = null;
                 login(response.data, token);
-                navigation.navigate('MainStack')
+                navigation.navigate('MainStack',{successMessage:"Logged in successful!!!"})
             }
             const getErrorMessage = (error) => {
                 setErrorApi(error)
@@ -45,10 +45,12 @@ export default ({navigation}) => {
             setErrorMsg("Please fill all details...");
         }
     }
-        return (
+    return (
         <SafeAreaView style={styles.container}>
             {error ? <ToastMessage type={'error'} message={errorMsg}/> : null}
             {errorApi ? <ToastMessage type={'error'} message={errorApi}/> : null}
+            {route.params?.successMessage ?
+                <ToastMessage type={'success'} message={route.params?.successMessage}/> : null}
             <Text style={styles.label}>Lost & Found</Text>
             <View style={styles.inputContainer}>
                 {inputList.map((item, key) =>
