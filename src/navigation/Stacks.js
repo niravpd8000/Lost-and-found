@@ -1,3 +1,10 @@
+/**
+ *  file: Stacks.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-22-2022
+ *  last-modified: April-08-2022
+ */
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignUp from '../pages/SignUp';
@@ -5,8 +12,8 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Profile from "../pages/Profile";
 import ItemFullView from "../pages/ItemFullView";
-import {Text, View} from "react-native";
-import ListItemFrom from "../pages/ListItemFrom";
+import {Text} from "react-native";
+import ListItemFrom from "../pages/ListItemForm";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MyListing from "../pages/MyListing";
 import ClaimedItem from "../pages/ClaimedItem";
@@ -54,7 +61,7 @@ export const HomeStack = ({navigation}) => {
 };
 
 
-export const SearchStack = ({navigation}) => {
+export const SearchStack = ({}) => {
     return (
         <Stack.Navigator initialRouteName="Search">
             <Stack.Screen name="Search" component={Search} options={{headerShown: false}}/>
@@ -63,7 +70,7 @@ export const SearchStack = ({navigation}) => {
     );
 };
 
-export const ProfileStack = ({navigation}) => {
+export const ProfileStack = ({}) => {
     return (
         <Stack.Navigator initialRouteName="Profile">
 

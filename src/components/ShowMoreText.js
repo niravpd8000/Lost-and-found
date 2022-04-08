@@ -1,3 +1,10 @@
+/**
+ *  file: ShowMoreText.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-18-2022
+ *  last-modified: April-08-2022
+ */
 import {StyleSheet, Text, View} from "react-native";
 import {useState} from "react";
 import {TouchableOpacity} from "react-native-web";

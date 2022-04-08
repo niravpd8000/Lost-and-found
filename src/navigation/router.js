@@ -1,4 +1,11 @@
-import React, {useEffect, useState} from 'react';
+/**
+ *  file: router.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: March-22-2022
+ *  last-modified: April-08-2022
+ */
+import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';

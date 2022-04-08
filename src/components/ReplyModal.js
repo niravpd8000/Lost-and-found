@@ -1,5 +1,12 @@
+/**
+ *  file: ReplyModal.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: April-05-2022
+ *  last-modified: April-08-2022
+ */
 import React, {useEffect, useState} from "react";
-import {Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from "react-native";
+import {Modal, StyleSheet, Text, Pressable,  TouchableOpacity} from "react-native";
 import TextField from "./TextField";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";

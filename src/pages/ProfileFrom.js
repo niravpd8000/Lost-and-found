@@ -1,3 +1,10 @@
+/**
+ *  file: ProfileForm.js
+ *  author: Nirav Pravinbhai Dhameliya <ndj585@uregina.ca>
+ *  version: 0.1
+ *  date-created: April-04-2022
+ *  last-modified: April-08-2022
+ */
 import React, {useState} from "react";
 import {SafeAreaView, StyleSheet, ScrollView, Picker, Text, View} from "react-native";
 import TextField from "../components/TextField";
