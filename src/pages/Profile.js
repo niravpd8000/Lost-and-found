@@ -22,7 +22,7 @@ const Profile = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <Image
-                source={'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80'}
+                source={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}
                 style={styles.image}
             />
             <View style={{width: "100%", padding: "20px"}}>

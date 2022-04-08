@@ -12,13 +12,14 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Profile from "../pages/Profile";
 import ItemFullView from "../pages/ItemFullView";
-import {Text} from "react-native";
+import {ActivityIndicator, Image, StatusBar, Text, View} from "react-native";
 import ListItemFrom from "../pages/ListItemForm";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MyListing from "../pages/MyListing";
 import ClaimedItem from "../pages/ClaimedItem";
 import ProfileFrom from "../pages/ProfileFrom";
 import Search from "../pages/Search";
+import Logo from '../../assets/logo.jpg';
 
 const Stack = createStackNavigator();
 
@@ -47,11 +48,13 @@ export const AuthStack = () => {
 export const HomeStack = ({navigation}) => {
     return (
         <Stack.Navigator initialRouteName="Home">
-
             <Stack.Screen name="Home" component={Home} options={{
-                headerTitle: () => <Text
-                    style={{color: '#fb5b5a', fontWeight: 'bold', fontSize: 20}}>Lost &
-                    Found</Text>,
+                headerTitle: () => <View style={{flexDirection: 'row'}}>
+                    <Image style={{width: 28, marginRight: 10}} source={Logo}/>
+                    <Text
+                        style={{color: '#fb5b5a', fontWeight: 'bold', fontSize: 20}}>Lost &
+                        Found</Text>
+                </View>,
                 headerRight: ({}) => (
                     <Ionicons
                         onPress={() => navigation.navigate('Report found or lost')}
@@ -99,3 +102,12 @@ export const ProfileStack = ({}) => {
         </Stack.Navigator>
     );
 };
+
+
+export const introScreen = () => {
+    return (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff'}}>
+        <Image style={{width: 150, height: 150}} source={Logo}/>
+        <Text style={{color: '#fb5b5a', marginVertical: 15, fontSize: 35, fontWeight: 'bold'}}>Lost & Found</Text>
+        <ActivityIndicator color={'#fb5b5a'}/>
+    </View>)
+}
