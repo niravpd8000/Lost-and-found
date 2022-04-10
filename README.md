@@ -37,18 +37,19 @@ details and receiving contact information from the person who found it.
 1. [Configuration instructions](#configuration)
 2. [Installation instructions](#installation)
 3. [Operating instructions](#operating)
-4. [Manifest](#manifest)
-5. [Copyright information](#copyright)
-6. [Contact information](#contact)
-7. [Bug list](#bug)
-8. [Troubleshooting tips](#troubleshooting)
-9. [Credits and acknowledgments](#credit)
+4. [Dependencies](#dependencies)
+5. [Manifest](#manifest)
+6. [Copyright information](#copyright)
+7. [Contact information](#contact)
+8. [Bug list](#bug)
+9. [Troubleshooting tips](#troubleshooting)
+10. [Credits and acknowledgments](#credit)
 <br/>
 <br/>
 <hr style="height: 5px"/>
 
 
-##Configuration instructions
+## Configuration instructions
 
 
 ### Prerequisites
@@ -61,7 +62,9 @@ Please install the following dependencies before running this project:
 
 Follow [this tutorial](https://www.tutorialspoint.com/react_native/react_native_environment_setup.htm) for React Native - Environment Setup.
 
-###Project Set Up
+## Installation instructions
+
+### Project Set Up
 
 Please, use following `git` command for cloning this application on your system. This will clone this project and 
 create a new folder `Lost-and-found` where you cloned this application.
@@ -72,14 +75,24 @@ Then, use following command to go into project directory.
 
     cd Lost-and-found
 
-###Install dependencies
+### Install dependencies
 
 After that, install all dependencies or devDependencies from a package. json file, use following command.
 
     npm install
 
 
-##Manifest
+### Dependencies
+
+- [axios](https://github.com/axios/axios) for CRUD operations.
+- [expo](https://github.com/expo) a framework to develop React Native apps.
+- [moment](https://github.com/moment) for date and time.
+- [react-native-animated-nav-tab-bar](https://github.com/torgeadelin/react-native-animated-nav-tab-bar) for animated bottom tab bar.
+- [react-native-dropdownalert](https://github.com/testshallpass/react-native-dropdownalert#readme) is an alert to notify users.
+- [react-native-image-slider](https://github.com/PaulBGD/react-native-image-slider#readme) for image sliding.
+- [react-native-skeleton-content](https://github.com/alexZajac/react-native-skeleton-content#readme) for loading animation in a Skeleton-style.
+
+## Manifest
 
 
 This template follows a very simple project structure:
@@ -119,3 +132,13 @@ This template follows a very simple project structure:
         - `Search`: Screen for searching lost/found items.
         - `SignUp`: This screen contains Signup form for creating an account.
     - `App.js`: The main component of application that allows it to run.
+
+## Copyright information
+
+## Contact information
+
+## Bug list
+
+## Troubleshooting tips
+
+## Credits and acknowledgments
