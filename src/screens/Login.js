@@ -6,8 +6,7 @@
  *  last-modified: April-08-2022
  */
 import React, {useState} from "react";
-import {SafeAreaView, StyleSheet, View} from "react-native";
-import {Text} from "react-native-web";
+import {SafeAreaView, StyleSheet, View, Text} from "react-native";
 import TextField from "../components/TextField";
 import CustomButton from "../components/CustomButton";
 import ToastMessage from "../components/ToastMessage";

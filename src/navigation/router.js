@@ -17,7 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
     const Stack = createStackNavigator();
-    const [introDisplay, setIntroDisplay] = useState(true)
+    const [introDisplay, setIntroDisplay] = useState(false)
     /**
      * initialState
      * @type {{isLoading: boolean, accessToken: string, userDetails: {}}}

@@ -86,7 +86,7 @@ const Search = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             <ScrollView style={styles.itemContainer}>
-                {!itemList.length && !state &&
+                {!itemList.length && !state ?
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
                         <Ionicons
                             name="search"
@@ -94,8 +94,8 @@ const Search = ({navigation}) => {
                             color={'#cfcfcf'}
                         />
                         <Text style={{color: "#cfcfcf"}}>Search the thing you have lost... </Text>
-                    </View>}
-                {!itemList.length && state &&
+                    </View>:null}
+                {!itemList.length && state ?
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
                         <Ionicons
                             name="post"
@@ -104,7 +104,7 @@ const Search = ({navigation}) => {
                         />
                         <Text style={{color: "#cfcfcf"}}>Result not available</Text>
                         <Text style={{color: "#cfcfcf"}}>Please search with new keyword</Text>
-                    </View>}
+                    </View>:null}
                 <ClaimModal itemData={selectedClaimItem} modalVisible={!!selectedClaimItem} onClose={(refresh) => {
                     setSelectedClaimItem(null)
                     if (refresh)

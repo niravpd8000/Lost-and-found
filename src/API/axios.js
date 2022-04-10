@@ -10,8 +10,8 @@ import axios from 'axios';
 import React from "react";
 
 const baseUrl =
-        "https://obscure-peak-45590.herokuapp.com"
-    // "http://localhost:8080"
+        // "https://obscure-peak-45590.herokuapp.com"
+    "http://localhost:8080"
 ;
 
 /**
@@ -95,7 +95,7 @@ export const postRequest = (url, data, getResponse, getError, token) => {
  */
 export const putRequest = ({url, data, getResponse, getError, token}) => {
     const headers = {
-        'Authorization': 'Bearer my-token',
+        'x-access-token': token,
     };
     axios.put(`${baseUrl}/api/${url}`, data, {headers})
         .then(res => {
