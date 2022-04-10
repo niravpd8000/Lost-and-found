@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
         height: 50,
         marginBottom: 20,
         justifyContent: "center",
-        padding: 20
+        paddingHorizontal: 20,
+        paddingVertical:10
     },
     error: {
         backgroundColor: "#ffafaf",
@@ -54,7 +55,8 @@ const styles = StyleSheet.create({
         height: 50,
         marginBottom: 20,
         justifyContent: "center",
-        padding: 20
+        paddingHorizontal: 20,
+        paddingVertical:10
     }
 });
 

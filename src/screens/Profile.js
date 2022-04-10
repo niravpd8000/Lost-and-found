@@ -25,7 +25,7 @@ const Profile = ({navigation}) => {
                 source={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}
                 style={styles.image}
             />
-            <View style={{width: "100%", padding: "20px"}}>
+            <View style={{width: "100%", padding: 20}}>
                 <Text
                     style={styles.label}>{loginState?.userDetails?.fullName ? loginState?.userDetails?.fullName : "User"}</Text>
                 <Text style={styles.subLabel}>{loginState?.userDetails?.email}</Text>
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
         padding: 10,
         height: 250,
         borderRadius: 15,
-        // boxShadow: "0px 0px 19px -10px rgba(0,0,0,0.75)"
     },
     label: {
         textAlign: "center",
