@@ -47,7 +47,9 @@ details and receiving contact information from the person who found it.
 <br/>
 <hr style="height: 5px"/>
 
+
 ##Configuration instructions
+
 
 ### Prerequisites
 
@@ -60,6 +62,7 @@ Please install the following dependencies before running this project:
 Follow [this tutorial](https://www.tutorialspoint.com/react_native/react_native_environment_setup.htm) for React Native - Environment Setup.
 
 ###Project Set Up
+
 Please, use following `git` command for cloning this application on your system. This will clone this project and 
 create a new folder `Lost-and-found` where you cloned this application.
 
@@ -70,9 +73,11 @@ Then, use following command to go into project directory.
     cd Lost-and-found
 
 ###Install dependencies
+
 After that, install all dependencies or devDependencies from a package. json file, use following command.
 
     npm install
+
 
 ##Manifest
 
