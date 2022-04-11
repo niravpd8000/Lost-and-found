@@ -182,7 +182,6 @@ const SignUp = ({ navigation }) => {
  */
 const styles = StyleSheet.create({
   container: {
-    maxWidth: 375,
     width: "100%",
     flex: 1,
     alignItems: "center",

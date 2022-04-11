@@ -57,7 +57,6 @@ const ItemFullDetails = ({data}) => {
             setState(response?.data?.data);
         }
         const getError = (error) => {
-            console.log("error.response.errorCode", error.response.status)
             if (error.response.status === 401) {
                 logout()
             }
@@ -88,7 +87,6 @@ const ItemFullDetails = ({data}) => {
             getItemById()
         }
         const getError = (error) => {
-            console.log("error.response.errorCode", error.response.status)
             if (error.response.status === 401) {
                 logout()
             }
@@ -105,12 +103,12 @@ const ItemFullDetails = ({data}) => {
 
     return (
         <View style={styles.container}>
-            <ReplyModal itemData={state} messageData={selectedMessage} modalVisible={!!selectedMessage}
-                        onClose={(refresh) => {
-                            setSelectedMessage(null)
-                            if (refresh)
-                                getItemById()
-                        }}/>
+            {<ReplyModal itemData={state} messageData={selectedMessage} modalVisible={selectedMessage}
+                         onClose={(refresh) => {
+                             setSelectedMessage(null)
+                             if (refresh)
+                                 getItemById()
+                         }}/>}
             <ClaimModal itemData={state}
                         modalVisible={openClaimModal}
                         onClose={(refresh) => {
@@ -120,7 +118,7 @@ const ItemFullDetails = ({data}) => {
                         }}/>
             <ConfirmDialog
                 message={"Note: you won't be able to change status after confirming..."}
-                modalVisible={markSuccessMessage}
+                modalVisible={!!markSuccessMessage}
                 onClose={() => setMarkSuccessMessage(null)}
                 onConfirm={() => claimItem()}
             />

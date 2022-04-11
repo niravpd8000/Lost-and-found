@@ -19,7 +19,7 @@ import MyListing from "../screens/MyListing";
 import ClaimedItem from "../screens/ClaimedItem";
 import ProfileFrom from "../screens/ProfileForm";
 import Search from "../screens/Search";
-// import Logo from '../../assets/logo.jpg';
+import Logo from '../../assets/logo.jpg';
 
 const Stack = createStackNavigator();
 
@@ -55,7 +55,7 @@ export const HomeStack = ({navigation}) => {
                 options={{
                     headerTitle: () => (
                         <View style={{flexDirection: "row"}}>
-                            <Image style={{width: 28, marginRight: 10}} source={Logo}/>
+                            {/*<Image style={{width: 28, marginRight: 10}} source={Logo}/>*/}
                             <Text
                                 style={{color: "#fb5b5a", fontWeight: "bold", fontSize: 20}}
                             >
@@ -98,7 +98,6 @@ export const SearchStack = ({}) => {
             <Stack.Screen
                 name="Search"
                 component={Search}
-                options={{headerShown: false}}
             />
             <Stack.Screen name="Details" component={ItemFullView}/>
         </Stack.Navigator>
