@@ -6,7 +6,7 @@
  *  last-modified: April-08-2022
  */
 import React, {useEffect, useState} from "react";
-import { StyleSheet, ScrollView, Text, View, TouchableOpacity, StatusBar} from "react-native";
+import {StyleSheet, ScrollView, Text, View, TouchableOpacity, StatusBar} from "react-native";
 import TextField from "../components/TextField";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
@@ -15,7 +15,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import ClaimModal from "../components/ClaimModal";
 import ItemCard from "../components/ItemCard";
 import {useIsFocused} from "@react-navigation/native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import ItemCardSkeleton from "../components/ItemCardSkeleton";
 
 /**
  * Search screen component
@@ -29,6 +30,7 @@ const Search = ({navigation}) => {
     const [state, setState] = useState("")
     const [itemList, setItemList] = useState([])
     const [selectedClaimItem, setSelectedClaimItem] = React.useState(null);
+    const [loading, setLoading] = useState(false)
 
     /** fetching states from context*/
     const {logout, loginState} = React.useContext(AuthContext);
@@ -40,24 +42,24 @@ const Search = ({navigation}) => {
     }, [isFocused, state])
 
     useEffect(() => {
-        navigation.setOptions({
-
-            header: () => (
-                <View style={styles.searchHeader}>
-                    <TextField
-                        placeholder={"Search..."}
-                        placeholderTextColor={"#989797"}
-                        style={styles.inputStyle} onChangeText={setState}/>
-                    <TouchableOpacity onPress={onClickSearch}>
-                        <Ionicons
-                            name="search"
-                            size={24}
-                            color={'#222222'}
-                        />
-                    </TouchableOpacity>
-                </View>
-            ),
-        })
+        // navigation.setOptions({
+        //
+        //     header: () => (
+        //         <View style={styles.searchHeader}>
+        //             <TextField
+        //                 placeholder={"Search..."}
+        //                 placeholderTextColor={"#989797"}
+        //                 style={styles.inputStyle} onChangeText={setState}/>
+        //             <TouchableOpacity onPress={onClickSearch}>
+        //                 <Ionicons
+        //                     name="search"
+        //                     size={24}
+        //                     color={'#222222'}
+        //                 />
+        //             </TouchableOpacity>
+        //         </View>
+        //     ),
+        // })
     }, [])
     /**
      * onClickSearch
@@ -73,11 +75,13 @@ const Search = ({navigation}) => {
      * <1> This function will call user types keyword
      */
     const onClickSearch = async () => {
+        setLoading(true)
         const getResponse = (response) => {
             setItemList(response?.data?.data);
+            setLoading(false)
         }
         const getError = (error) => {
-
+            setLoading(false)
             if (error.response.status === 401) {
                 logout()
             }
@@ -85,28 +89,39 @@ const Search = ({navigation}) => {
         try {
             if (state)
                 await postRequest(API.SEARCH_ITEM, {searchKey: state}, getResponse, getError, loginState.accessToken)
-            else setItemList([])
+            else {
+                setItemList([])
+                setLoading(false)
+            }
         } catch (e) {
+            setLoading(false)
             console.log(e)
         }
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            {/*<View style={styles.searchHeader}>*/}
-            {/*    <TextField*/}
-            {/*        placeholder={"Search..."}*/}
-            {/*        placeholderTextColor={"#989797"}*/}
-            {/*        style={styles.inputStyle} onChangeText={setState}/>*/}
-            {/*    <TouchableOpacity onPress={onClickSearch}>*/}
-            {/*        <Ionicons*/}
-            {/*            name="search"*/}
-            {/*            size={24}*/}
-            {/*            color={'#222222'}*/}
-            {/*        />*/}
-            {/*    </TouchableOpacity>*/}
-            {/*</View>*/}
+            <View style={styles.searchHeader}>
+                <TextField
+                    placeholder={"Search..."}
+                    placeholderTextColor={"#989797"}
+                    style={styles.inputStyle} onChangeText={setState}/>
+                <TouchableOpacity onPress={onClickSearch}>
+                    <Ionicons
+                        name="search"
+                        size={24}
+                        color={'#222222'}
+                    />
+                </TouchableOpacity>
+            </View>
             <ScrollView style={styles.itemContainer}>
+                {loading ?
+                    <View>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                    </View> : null
+                }
                 {!itemList.length && !state ?
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
                         <Ionicons
@@ -153,8 +168,10 @@ const Search = ({navigation}) => {
  */
 const styles = StyleSheet.create({
     container: {
-        width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
-        marginTop:StatusBar.currentHeight
+        width: "100%", flex: 1,
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        // marginTop: StatusBar.currentHeight
     },
     inputStyle: {
         width: "100%",
@@ -173,9 +190,10 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#ffffff",
         fontWeight: 'bold',
-        height: 64,
+        // height: 64,
         justifyContent: "center",
         paddingVertical: 12,
+        // marginTop: 20,
         paddingHorizontal: 40,
     },
     itemContainer: {

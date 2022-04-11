@@ -5,7 +5,7 @@
  *  date-created: March-17-2022
  *  last-modified: April-08-2022
  */
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {SafeAreaView, StyleSheet, ScrollView, RefreshControl, View, Text, TouchableOpacity} from "react-native";
 import ItemCard from "../components/ItemCard";
 import {getRequest} from "../API/axios";
@@ -14,6 +14,7 @@ import {AuthContext} from "../components/Context";
 import ClaimModal from "../components/ClaimModal";
 import {useIsFocused} from "@react-navigation/native";
 import ToastMessage from "../components/ToastMessage";
+import ItemCardSkeleton from "../components/ItemCardSkeleton";
 
 /**
  * Home screen component
@@ -29,13 +30,16 @@ const Home = ({navigation, route}) => {
     const [refreshing, setRefreshing] = React.useState(false);
     const [selectedTab, setSelectedTab] = React.useState("All");
     const [selectedClaimItem, setSelectedClaimItem] = React.useState(null);
+    const [loading, setLoading] = useState(false)
 
     /**
      * onRefresh for refreshing page
      * @type {(function(): void)|*}
      */
     const onRefresh = React.useCallback(() => {
+        setLoading(true);
         setRefreshing(true);
+        getItemList();
         // wait(2000).then(() => setRefreshing(false));
     }, []);
     /** fetching states from context*/
@@ -60,11 +64,16 @@ const Home = ({navigation, route}) => {
      * <1> This function will call first time when page will render and also when item claims
      */
     const getItemList = async () => {
+        setLoading(true);
         const getResponse = (response) => {
             setList(response?.data?.data);
             setFilteredList(response?.data?.data)
+            setLoading(false);
+            setRefreshing(false);
         }
         const getError = (error) => {
+            setLoading(false);
+            setRefreshing(false);
             if (error.response.status === 401) {
                 logout()
             }
@@ -73,6 +82,8 @@ const Home = ({navigation, route}) => {
             await getRequest(API.GET_ITEM_LIST, getResponse, getError, loginState.accessToken)
         } catch (e) {
             console.log(e)
+            setRefreshing(false);
+            setLoading(false);
         }
     }
 
@@ -104,7 +115,7 @@ const Home = ({navigation, route}) => {
                 height: 30,
                 paddingHorizontal: 20,
                 marginBottom: 10,
-                marginTop:20
+                marginTop: 20
             }}>
                 <TouchableOpacity onPress={() => onClickTab("All")}
                                   style={selectedTab === "All" ? styles.selectedTab : styles.tab}><Text
@@ -129,6 +140,13 @@ const Home = ({navigation, route}) => {
                     if (refresh)
                         getItemList()
                 }}/>
+                {loading ?
+                    <View>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                    </View> : null
+                }
                 {filteredList.map((item, key) => <ItemCard
                         key={key}
                         data={item}

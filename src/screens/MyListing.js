@@ -5,7 +5,7 @@
  *  date-created: April-04-2022
  *  last-modified: April-08-2022
  */
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {SafeAreaView, StyleSheet, ScrollView, RefreshControl, View, Text} from "react-native";
 import ItemCard from "../components/ItemCard";
 import {getRequest} from "../API/axios";
@@ -13,6 +13,7 @@ import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {useIsFocused} from "@react-navigation/native";
+import ItemCardSkeleton from "../components/ItemCardSkeleton";
 
 /**
  * MyListing screen component
@@ -24,9 +25,12 @@ const MyListing = ({navigation}) => {
     const isFocused = useIsFocused();
     const [list, setList] = React.useState([]);
     const [refreshing, setRefreshing] = React.useState(false);
+    const [loading, setLoading] = useState(false)
+
     const onRefresh = React.useCallback(() => {
+        setLoading(true);
         setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
+        getItemList();
     }, []);
 
     /** fetching states from context*/
@@ -50,11 +54,15 @@ const MyListing = ({navigation}) => {
      * <1> This function will call first time when page will render and also when item claims
      */
     const getItemList = async () => {
+        setLoading(true);
         const getResponse = (response) => {
             setList(response?.data?.data);
+            setLoading(false);
+            setRefreshing(false);
         }
         const getError = (error) => {
-
+            setLoading(false);
+            setRefreshing(false);
             if (error.response.status === 401) {
                 logout()
             }
@@ -62,6 +70,8 @@ const MyListing = ({navigation}) => {
         try {
             await getRequest(API.GET_MY_ITEM_LISTING, getResponse, getError, loginState.accessToken)
         } catch (e) {
+            setLoading(false);
+            setRefreshing(false);
             console.log(e)
         }
     }
@@ -73,6 +83,13 @@ const MyListing = ({navigation}) => {
                     onRefresh={onRefresh}
                 />
             }>
+                {loading ?
+                    <View>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                    </View> : null
+                }
                 {!list.length &&
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
                         <Ionicons
