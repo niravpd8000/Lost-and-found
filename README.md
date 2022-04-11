@@ -110,20 +110,20 @@ Run on web browser:
 
 ## Operating instructions
 
-<img alt="logo" src="assets/screenshots/Signup.png" height="200px"/>
-<img alt="logo" src="assets/screenshots/Login.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Signup.png" height="400px"/>
+<img alt="logo" src="assets/screenshots/Login.png" height="400px"/>
 <br/>
-<img alt="logo" src="assets/screenshots/Home.png" height="200px"/>
-<img alt="logo" src="assets/screenshots/Details.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Home.png" height="400px"/>
+<img alt="logo" src="assets/screenshots/Details.png" height="400px"/>
 <br/>
-<img alt="logo" src="assets/screenshots/Claim.png" height="200px"/>
-<img alt="logo" src="assets/screenshots/Claim%20Status.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Claim.png" height="400px"/>
+<img alt="logo" src="assets/screenshots/Claim%20Status.png" height="400px"/>
 <br/>
-<img alt="logo" src="assets/screenshots/Reply.png" height="200px"/>
-<img alt="logo" src="assets/screenshots/MarkAsFound.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Reply.png" height="400px"/>
+<img alt="logo" src="assets/screenshots/MarkAsFound.png" height="400px"/>
 <br/>
-<img alt="logo" src="assets/screenshots/Search.png" height="200px"/>
-<img alt="logo" src="assets/screenshots/Profile.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Search.png" height="400px"/>
+<img alt="logo" src="assets/screenshots/Profile.png" height="400px"/>
 
 
 
