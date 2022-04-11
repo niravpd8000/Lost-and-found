@@ -192,12 +192,30 @@ The following structure includes a list of files:
 
 ## Screenshots
 
-<img alt="Home" src="assets/screenshots/Home.png" height="300px"/>
-<img alt="Details" src="assets/screenshots/Details.png" height="300px"/>
-<img alt="Claim" src="assets/screenshots/Claim.png" height="300px"/>
-<img alt="Claim status" src="assets/screenshots/Claim%20Status.png" height="300px"/>
-<img alt="Reply" src="assets/screenshots/Reply.png" height="300px"/>
-<img alt="MarkAsFound" src="assets/screenshots/MarkAsFound.png" height="300px"/>
+<table>
+  <tr>
+    <td>Home Screen</td>
+     <td>Details Screen</td>
+     <td>Claim Item</td>
+  </tr>
+  <tr>
+    <td valign="top"><img alt="Home" src="assets/screenshots/Home.png" height="300px"/></td>
+    <td valign="top"><img alt="Details" src="assets/screenshots/Details.png" height="300px"/></td>
+    <td valign="top"><img alt="Claim" src="assets/screenshots/Claim.png" height="300px"/></td>
+  </tr>
+ </table>
+<table>
+  <tr>
+     <td>Claim Details</td>
+     <td>Claim Reply</td>
+     <td>Mask as Found</td>
+  </tr>
+  <tr>
+    <td valign="top"><img alt="Claim status" src="assets/screenshots/Claim%20Status.png" height="300px"/></td>
+    <td valign="top"><img alt="Reply" src="assets/screenshots/Reply.png" height="300px"/></td>
+    <td valign="top"><img alt="MarkAsFound" src="assets/screenshots/MarkAsFound.png" height="300px"/></td>
+  </tr>
+ </table>
 
 ## Backend Details
 
