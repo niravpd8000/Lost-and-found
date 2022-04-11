@@ -9,8 +9,6 @@
 [//]: # ()
 [//]: # (<h1 align="center" style="color:#fb5b5a">Lost & found</h1>)
 
-<hr/>
-
 <p align="center"><img src="https://i.ibb.co/MsqQDmk/logo.jpg" height="200px"/></p>
 
 <p align="center"><img src="https://i.ibb.co/WzSkYpb/1j-oj-VNGOMk-X9-W2-J1iwi-GKhjf6-Crhd-Pn-Qi-Ii-Wcq-L2-VE9-Alom-SUqhf-Fr9w.png" alt="lost & found logo"></p>
@@ -29,7 +27,6 @@
 <h2 align="center">
 Check often and claim what is yours.
 </h2>
-<hr/>
 
 ### Badges
 
@@ -67,9 +64,9 @@ I chose this topic for this project since I recently misplaced my pricey Apple A
 1. [Features](#features)
 2. [Configuration instructions](#configuration-instructions)
 3. [Installation instructions](#installation-instructions)
-4. [Operating instructions](#operating-instructions)
-5. [Dependencies](#dependencies)
-6. [Manifest](#manifest)
+4. [Manifest](#manifest)
+5. [Screenshots](#screenshots)
+6. [Backend Details](#backend-details)
 7. [Copyright information](#copyright-information)
 8. [Contact information](#contact-information)
 9. [Bug list](#bug-list)
@@ -152,20 +149,6 @@ Run on web browser:
 - [react-native-skeleton-content](https://github.com/alexZajac/react-native-skeleton-content#readme) for loading
   animation in a Skeleton-style.
 
-## Operating instructions
-
-
-
-<img alt="Home" src="assets/screenshots/Home.png" height="200px"/>
-<img alt="Details" src="assets/screenshots/Details.png" height="200px" align="right"/>
-<br/>
-<img alt="Claim" src="assets/screenshots/Claim.png" height="200px"/>
-<img alt="Claim status" src="assets/screenshots/Claim%20Status.png" height="200px" align="right"/>
-<br/>
-<img alt="Reply" src="assets/screenshots/Reply.png" height="200px"/>
-<img alt="MarkAsFound" src="assets/screenshots/MarkAsFound.png" height="200px" align="right"/>
-<br/>
-
 ## Manifest
 
 The following structure includes a list of files:
@@ -207,9 +190,25 @@ The following structure includes a list of files:
         - `SignUp`: This screen contains Signup form for creating an account.
     - `App.js`: The main component of application that allows it to run.
 
+## Screenshots
+
+<img alt="Home" src="assets/screenshots/Home.png" height="300px"/>
+<img alt="Details" src="assets/screenshots/Details.png" height="300px"/>
+<img alt="Claim" src="assets/screenshots/Claim.png" height="300px"/>
+<img alt="Claim status" src="assets/screenshots/Claim%20Status.png" height="300px"/>
+<img alt="Reply" src="assets/screenshots/Reply.png" height="300px"/>
+<img alt="MarkAsFound" src="assets/screenshots/MarkAsFound.png" height="300px"/>
+
+## Backend Details
+
+Backend has been built in Node.js with mongoDB, here is the [link](https://github.com/niravpd8000/lost-and-found-backend) of github repo.
+
+Any contribution would be greatly appreciated.
+
+
 ## Copyright information
 
-[MIT](https://opensource.org/licenses/MIT) Copyright (c) 2022, @niravpd8000
+[MIT](https://opensource.org/licenses/MIT) Copyright (c) 2022
 
 ## Contact information
 
@@ -219,15 +218,30 @@ Contact: <a src="mailto:niravpd8000@gmail.com">niravpd8000@gmail.com</a>
 
 ## Bug list
 
+- Image uploading facing issues from backend.
+
 
 ## To do list
 
+- Image Upload with AWS.
+- Live chatting.
+- Edit Profile Page. 
 
 
 ## Troubleshooting tips
+
+Follow this [link](https://reactnative.dev/docs/troubleshooting) for troubleshooting and debugging
 
 ## Credits and acknowledgments
 
 I would like to express my sincere gratitude to my professor <b>Dr. Trevor Tomesh</b>, who taught
 React Native with live coding in Mobile computing (CS-855) class, which helped me a lot to learn
 about React Native.
+
+### Credit
+
+- [Logo](https://m.facebook.com/LostAndFoundItems/photos/a.222669141078262/222669144411595/?type=3)
+- [Catalin Torge](https://github.com/torgeadelin): For [animated nav tab bar](https://www.npmjs.com/package/react-native-animated-nav-tab-bar).
+- [PaulBGD](https://github.com/PaulBGD): For [image slider](https://github.com/PaulBGD/react-native-image-slider#readme).
+- [Brian](https://github.com/testshallpass): For [Toast Message](https://github.com/testshallpass/react-native-dropdownalert)
+- [Alexandre Zajac](https://github.com/alexZajac): For [Skeleton](https://github.com/alexZajac/react-native-skeleton-content)
