@@ -217,14 +217,6 @@ The following structure includes a list of files:
   </tr>
  </table>
 
-
-
-
-
-
-
-
-
 ## Backend Details
 
 Backend has been built in Node.js with mongoDB, here is the [link](https://github.com/niravpd8000/lost-and-found-backend) of github repo.
