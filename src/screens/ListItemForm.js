@@ -31,7 +31,7 @@ const ListItemForm = ({}) => {
         title: "",
         type: true,
         images: [
-            "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-blue-select-2021?wid=470&hei=556&fmt=png-alpha&.v=1645572386470",
+            "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930",
         ],
         place: "",
         color: "",
