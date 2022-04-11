@@ -7,7 +7,7 @@
  */
 
 
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {SafeAreaView, StyleSheet, ScrollView, RefreshControl, View, Text} from "react-native";
 import ItemCard from "../components/ItemCard";
 import {getRequest} from "../API/axios";
@@ -15,6 +15,7 @@ import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
 import {useIsFocused} from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import ItemCardSkeleton from "../components/ItemCardSkeleton";
 
 const ClaimedItem = ({navigation}) => {
 
@@ -22,14 +23,15 @@ const ClaimedItem = ({navigation}) => {
     const isFocused = useIsFocused();
     const [list, setList] = React.useState([]);
     const [refreshing, setRefreshing] = React.useState(false);
-
+    const [loading, setLoading] = useState(false)
     /**
      * onRefresh for refreshing page
      * @type {(function(): void)|*}
      */
     const onRefresh = React.useCallback(() => {
+        setLoading(true);
         setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
+        getItemList();
     }, []);
 
     /** fetching states from context*/
@@ -54,10 +56,15 @@ const ClaimedItem = ({navigation}) => {
      * <1> This function will call first time when page will render and also when item claims
      */
     const getItemList = async () => {
+        setLoading(true);
         const getResponse = (response) => {
             setList(response?.data?.data);
+            setLoading(false);
+            setRefreshing(false);
         }
         const getError = (error) => {
+            setLoading(false);
+            setRefreshing(false);
             if (error.response.status === 401) {
                 logout()
             }
@@ -66,6 +73,8 @@ const ClaimedItem = ({navigation}) => {
             await getRequest(API.GET_CLAIMED_ITEM_LISTING, getResponse, getError, loginState.accessToken)
         } catch (e) {
             console.log(e)
+            setLoading(false);
+            setRefreshing(false);
         }
     }
 
@@ -79,6 +88,13 @@ const ClaimedItem = ({navigation}) => {
                         onRefresh={onRefresh}
                     />
                 }>
+                {loading ?
+                    <View>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                        <ItemCardSkeleton/>
+                    </View> : null
+                }
                 {!list.length &&
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
                         <Ionicons

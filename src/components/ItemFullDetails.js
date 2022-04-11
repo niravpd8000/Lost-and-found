@@ -13,10 +13,12 @@ import moment from "moment";
 import {AuthContext} from "./Context";
 import ClaimModal from "./ClaimModal";
 import ReplyModal from "./ReplyModal";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {getRequest, postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import ConfirmDialog from "./ConfirmDialog";
+import Loading from "./Loading";
+import ItemFullViewSkeleton from "./ItemFullViewSkeleton";
 
 /**
  * ItemFullDetails component
@@ -30,6 +32,7 @@ const ItemFullDetails = ({data}) => {
     const [selectedMessage, setSelectedMessage] = React.useState(null);
     const [markSuccessMessage, setMarkSuccessMessage] = React.useState(null);
     const [state, setState] = React.useState({});
+    const [loading, setLoading] = useState(true)
 
     /** fetching states from context*/
     const {logout, loginState} = React.useContext(AuthContext);
@@ -53,10 +56,13 @@ const ItemFullDetails = ({data}) => {
      * <1> This function will call first time when page will render and also when item details modify
      */
     const getItemById = async () => {
+        setLoading(true);
         const getResponse = (response) => {
             setState(response?.data?.data);
+            setLoading(false);
         }
         const getError = (error) => {
+            setLoading(false);
             if (error.response.status === 401) {
                 logout()
             }
@@ -64,6 +70,7 @@ const ItemFullDetails = ({data}) => {
         try {
             await getRequest(`${API.GET_CLAIM_ITEM_BY_ID}/${data?._id}`, getResponse, getError, loginState.accessToken)
         } catch (e) {
+            setLoading(false);
             console.log(e)
         }
     }
@@ -122,145 +129,149 @@ const ItemFullDetails = ({data}) => {
                 onClose={() => setMarkSuccessMessage(null)}
                 onConfirm={() => claimItem()}
             />
-            <View>
-                <ImageSlider
-                    loopBothSides
-                    customSlide={({index, item, style}) => (
-                        <View key={index} style={[style, styles.customSlide]}>
-                            <Image source={{uri: item}} style={styles.customImage}/>
-                        </View>
-                    )}
-                    images={state?.images || []}
-                />
-            </View>
-            <View style={styles.details}>
-                <View style={styles.header}>
-                    <View style={{flex: 3}}>
-                        <Text style={styles.title}>{state?.title}</Text>
-                    </View>
-                    <View style={{flex: 1, textAlign: "right"}}>
-                        {state?.claims?.find(i => i.senderId === loginState?.userDetails?.id) ?
-                            <Text style={{fontWeight: 'bold', color: '#240080'}}>Claimed</Text> :
-                            loginState?.userDetails?.id !== state?.userId ?
-                                <CustomButton height={40} onClick={() => setOpenClaimModal(true)}
-                                              contained>{data?.itemTypeFound ? "Claim" : "Found"}</CustomButton> :
-                                null
-                        }
-                    </View>
-                </View>
-                <View style={styles.listItem}>
-                    <Text style={styles.subTitle}>Brand Name : </Text>
-                    <Text>{state?.brand}</Text>
-                </View>
-                <View style={styles.listItem}>
-                    <Text style={styles.subTitle}>Color : </Text>
-                    <Text>{state?.color}</Text>
-                </View>
-                <View style={styles.listItem}>
-                    <View style={{flex: 1}}>
-                        <Text style={styles.subTitle}>Place : </Text>
-                    </View>
-                    <View style={[styles.listItem, {flex: 2, justifyContent: "space-evenly"}]}>
-                        <Text style={styles.placeItem}>{state?.place}</Text>
-                    </View>
-                </View>
-                <View style={styles.listItem}>
-                    <View style={{flex: 1}}>
-                        <Text style={styles.subTitle}>Category : </Text>
-                    </View>
-                    <View style={[styles.listItem, {flex: 2, justifyContent: "space-evenly"}]}>
-                        {state?.category ? <Text style={styles.placeItem}>{state?.category}</Text> : null}
-                        {state?.subCategory ? <Text style={styles.placeItem}>{state?.subCategory}</Text> : null}
-                    </View>
-                </View>
-                <View style={styles.listItem}>
-                    <Text style={styles.subTitle}>Date : </Text>
-                    <Text>{moment(state?.createdAt).format("DD MMM YY")}</Text>
-                </View>
-                <View style={styles.detailsView}>
-                    <Text style={styles.subTitle}>Description</Text>
-                    <View style={styles.description}>
-                        <Text style={{color: "black", flexShrink: 1}}>
-                            {state?.description}
-                        </Text>
-                    </View>
-                </View>
-                {loginState?.userDetails?.id !== state?.userId && state?.claims && state?.claims?.length ?
-                    <View style={styles.detailsView}>
-                        <Text style={styles.subTitle}>Claimed Message by you</Text>
-                        <View style={styles.description}>
-                            <Text style={{color: "black", flexShrink: 1}}>
-                                {state?.claims[0].message}
-                            </Text>
-                        </View>
-                    </View> : null
-                }
-                {loginState?.userDetails?.id !== state?.userId && state?.claims && state?.claims?.length && state?.claims[0].reply ?
-                    <View style={styles.detailsView}>
-                        <Text style={styles.subTitle}>Reply</Text>
-                        <View style={styles.description}>
-                            <Text style={{color: "black", flexShrink: 1}}>
-                                {state?.claims[0].reply}
-                            </Text>
-                        </View>
-                    </View> : null
-                }
-                {loginState?.userDetails?.id === state?.userId ?
-                    <View style={{marginTop: 10}}>
-                        <Text style={styles.subTitle}>Claim Status ({state?.claims ? state?.claims?.length : 0})</Text>
-                        <View
-                            style={{
-                                borderBottomColor: 'black',
-                                borderBottomWidth: 1,
-                                marginVertical: 5
-                            }}
-                        />
-                        {state?.claims.map((message, key) => <View key={key}
-                                                                   style={[styles.listItem, {
-                                                                       backgroundColor: "#c2c2c2",
-                                                                       padding: 10,
-                                                                       marginBottom: 5
-                                                                   }]}>
-                            <View style={{width: "100%"}}>
-                                <Text style={styles.subTitle}>Anonymous {key + 1}</Text>
-                                <View style={styles.listItem}>
-                                    <View style={{flex: 1}}>
-                                        <Text style={styles.subTitle}>Message : </Text>
-                                    </View>
-                                    <View style={[styles.listItem, {flex: 3, justifyContent: "flex-start"}]}>
-                                        <Text>{message?.message}</Text>
-                                    </View>
-                                </View>
-                                {message?.reply ?
-                                    <View style={[styles.listItem, {justifyContent: "flex-start"}]}>
-                                        <View>
-                                            <Text style={styles.subTitle}>Reply by you : </Text>
-                                        </View>
-                                        <View style={[{justifyContent: "flex-start"}]}>
-                                            <Text>{message?.reply}</Text>
-                                        </View>
-                                    </View> :
-                                    null
-                                }
-                                {!state?.itemFound && <View style={[styles.listItem]}>
-                                    <View style={{flex: 1}}>
-                                        {!message?.reply ?
-                                            <CustomButton height={30} onClick={() => setSelectedMessage(message)}
-                                                          contained>Reply</CustomButton>
-                                            : null}
-                                    </View>
-                                    <View style={{flex: 1}}>
-                                        <CustomButton height={30} onClick={() => setMarkSuccessMessage(message)} contained>Mark as
-                                            found</CustomButton>
-                                    </View>
-                                </View>}
+            {loading ? <ItemFullViewSkeleton/> : <View>
+                <View>
+                    <ImageSlider
+                        loopBothSides
+                        customSlide={({index, item, style}) => (
+                            <View key={index} style={[style, styles.customSlide]}>
+                                <Image source={{uri: item}} style={styles.customImage}/>
                             </View>
-                        </View>)}
+                        )}
+                        images={state?.images || []}
+                    />
+                </View>
+                <View style={styles.details}>
+                    <View style={styles.header}>
+                        <View style={{flex: 3}}>
+                            <Text style={styles.title}>{state?.title}</Text>
+                        </View>
+                        <View style={{flex: 1, textAlign: "right"}}>
+                            {state?.claims?.find(i => i.senderId === loginState?.userDetails?.id) ?
+                                <Text style={{fontWeight: 'bold', color: '#240080'}}>Claimed</Text> :
+                                loginState?.userDetails?.id !== state?.userId ?
+                                    <CustomButton height={40} onClick={() => setOpenClaimModal(true)}
+                                                  contained>{data?.itemTypeFound ? "Claim" : "Found"}</CustomButton> :
+                                    null
+                            }
+                        </View>
                     </View>
-                    : null
+                    <View style={styles.listItem}>
+                        <Text style={styles.subTitle}>Brand Name : </Text>
+                        <Text>{state?.brand}</Text>
+                    </View>
+                    <View style={styles.listItem}>
+                        <Text style={styles.subTitle}>Color : </Text>
+                        <Text>{state?.color}</Text>
+                    </View>
+                    <View style={styles.listItem}>
+                        <View style={{flex: 1}}>
+                            <Text style={styles.subTitle}>Place : </Text>
+                        </View>
+                        <View style={[styles.listItem, {flex: 2, justifyContent: "space-evenly"}]}>
+                            <Text style={styles.placeItem}>{state?.place}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.listItem}>
+                        <View style={{flex: 1}}>
+                            <Text style={styles.subTitle}>Category : </Text>
+                        </View>
+                        <View style={[styles.listItem, {flex: 2, justifyContent: "space-evenly"}]}>
+                            {state?.category ? <Text style={styles.placeItem}>{state?.category}</Text> : null}
+                            {state?.subCategory ? <Text style={styles.placeItem}>{state?.subCategory}</Text> : null}
+                        </View>
+                    </View>
+                    <View style={styles.listItem}>
+                        <Text style={styles.subTitle}>Date : </Text>
+                        <Text>{moment(state?.createdAt).format("DD MMM YY")}</Text>
+                    </View>
+                    <View style={styles.detailsView}>
+                        <Text style={styles.subTitle}>Description</Text>
+                        <View style={styles.description}>
+                            <Text style={{color: "black", flexShrink: 1}}>
+                                {state?.description}
+                            </Text>
+                        </View>
+                    </View>
+                    {loginState?.userDetails?.id !== state?.userId && state?.claims && state?.claims?.length ?
+                        <View style={styles.detailsView}>
+                            <Text style={styles.subTitle}>Claimed Message by you</Text>
+                            <View style={styles.description}>
+                                <Text style={{color: "black", flexShrink: 1}}>
+                                    {state?.claims[0].message}
+                                </Text>
+                            </View>
+                        </View> : null
+                    }
+                    {loginState?.userDetails?.id !== state?.userId && state?.claims && state?.claims?.length && state?.claims[0].reply ?
+                        <View style={styles.detailsView}>
+                            <Text style={styles.subTitle}>Reply</Text>
+                            <View style={styles.description}>
+                                <Text style={{color: "black", flexShrink: 1}}>
+                                    {state?.claims[0].reply}
+                                </Text>
+                            </View>
+                        </View> : null
+                    }
+                    {loginState?.userDetails?.id === state?.userId ?
+                        <View style={{marginTop: 10}}>
+                            <Text style={styles.subTitle}>Claim Status
+                                ({state?.claims ? state?.claims?.length : 0})</Text>
+                            <View
+                                style={{
+                                    borderBottomColor: 'black',
+                                    borderBottomWidth: 1,
+                                    marginVertical: 5
+                                }}
+                            />
+                            {state?.claims.map((message, key) => <View key={key}
+                                                                       style={[styles.listItem, {
+                                                                           backgroundColor: "#c2c2c2",
+                                                                           padding: 10,
+                                                                           marginBottom: 5
+                                                                       }]}>
+                                <View style={{width: "100%"}}>
+                                    <Text style={styles.subTitle}>Anonymous {key + 1}</Text>
+                                    <View style={styles.listItem}>
+                                        <View style={{flex: 2}}>
+                                            <Text style={styles.subTitle}>Message : </Text>
+                                        </View>
+                                        <View style={[styles.listItem, {flex: 4, justifyContent: "flex-start"}]}>
+                                            <Text>{message?.message}</Text>
+                                        </View>
+                                    </View>
+                                    {message?.reply ?
+                                        <View style={[styles.listItem, {justifyContent: "flex-start"}]}>
+                                            <View style={{flex: 1}}>
+                                                <Text style={styles.subTitle}>Reply by you : </Text>
+                                            </View>
+                                            <View style={[{justifyContent: "flex-start", flex: 2}]}>
+                                                <Text>{message?.reply}</Text>
+                                            </View>
+                                        </View> :
+                                        null
+                                    }
+                                    {!state?.itemFound && <View style={[styles.listItem]}>
+                                        <View style={{flex: 1}}>
+                                            {!message?.reply ?
+                                                <CustomButton height={30} onClick={() => setSelectedMessage(message)}
+                                                              contained>Reply</CustomButton>
+                                                : null}
+                                        </View>
+                                        <View style={{flex: 1}}>
+                                            <CustomButton height={30} onClick={() => setMarkSuccessMessage(message)}
+                                                          contained>Mark as
+                                                found</CustomButton>
+                                        </View>
+                                    </View>}
+                                </View>
+                            </View>)}
+                        </View>
+                        : null
 
-                }
-            </View>
+                    }
+                </View>
+            </View>}
         </View>
     );
 }
@@ -299,7 +310,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     details: {
-        padding: 20
+        paddingVertical: 20,
+        paddingHorizontal: 10
     },
     header: {
         flex: 1,
