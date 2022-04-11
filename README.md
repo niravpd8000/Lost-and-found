@@ -45,7 +45,6 @@ details and receiving contact information from the person who found it.
 9. [Troubleshooting tips](#troubleshooting-tips)
 10. [Credits and acknowledgments](#credits-and-acknowledgments)
 <br/>
-<br/>
 <hr style="height: 5px"/>
 
 
@@ -81,6 +80,23 @@ After that, install all dependencies or devDependencies from a package. json fil
 
     npm install
 
+### Run Application
+
+To run an application on a different platform, use the following commands:
+
+    npm start
+
+Run on Android platform:
+
+    npm run android
+
+Run on IOS platform:
+
+    npm run ios
+
+Run on web browser:
+
+    npm run web
 
 ### Dependencies
 
@@ -92,10 +108,30 @@ After that, install all dependencies or devDependencies from a package. json fil
 - [react-native-image-slider](https://github.com/PaulBGD/react-native-image-slider#readme) for image sliding.
 - [react-native-skeleton-content](https://github.com/alexZajac/react-native-skeleton-content#readme) for loading animation in a Skeleton-style.
 
+## Operating instructions
+
+<img alt="logo" src="assets/screenshots/Signup.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Login.png" height="200px"/>
+<br/>
+<img alt="logo" src="assets/screenshots/Home.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Details.png" height="200px"/>
+<br/>
+<img alt="logo" src="assets/screenshots/Claim.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Claim%20Status.png" height="200px"/>
+<br/>
+<img alt="logo" src="assets/screenshots/Reply.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/MarkAsFound.png" height="200px"/>
+<br/>
+<img alt="logo" src="assets/screenshots/Search.png" height="200px"/>
+<img alt="logo" src="assets/screenshots/Profile.png" height="200px"/>
+
+
+
+
 ## Manifest
 
+The following structure includes a list of files:
 
-This template follows a very simple project structure:
 - `assets`: This folder stores all images and logo.
 - `src`: This folder stores all of application's code.
     - `API`: This folder contains all actions that can be dispatched to redux.

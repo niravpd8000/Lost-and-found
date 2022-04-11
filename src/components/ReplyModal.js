@@ -60,7 +60,6 @@ const ReplyModal = ({modalVisible, onClose, messageData, itemData}) => {
             onClose(true)
         }
         const getError = (error) => {
-            console.log("error.response.errorCode", error.response.status)
             if (error.response.status === 401) {
                 logout()
             }

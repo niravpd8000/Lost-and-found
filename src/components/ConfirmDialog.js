@@ -32,7 +32,7 @@ const ConfirmDialog = ({modalVisible, onClose, message, onConfirm}) => {
             <TouchableOpacity onPress={onClose} style={styles.centeredView}>
                 <TouchableOpacity activeOpacity={1} style={styles.modalView}>
                     <View style={{width: "100%"}}>
-                        <Text style={{color: "#2a2a2a", fontWeight: "bold", fontSize: 18}}>Confirm</Text>
+                        <Text style={{color: "#2a2a2a", fontWeight: "bold", fontSize: 18}}>Confirm Mark as found</Text>
                         <View
                             style={{
                                 borderBottomColor: 'black',

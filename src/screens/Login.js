@@ -72,9 +72,7 @@ const Login = ({navigation, route}) => {
                 navigation.navigate('MainStack', {successMessage: "Logged in successful!!!"})
             }
             const getErrorMessage = (error) => {
-                setErrorApi(error)
-
-            }
+                setErrorApi(error)}
             await postRequest(API.SIGN_IN, data, getResponse, getErrorMessage)
         } else {
             setError(true);

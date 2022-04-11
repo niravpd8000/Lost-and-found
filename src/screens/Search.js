@@ -6,7 +6,7 @@
  *  last-modified: April-08-2022
  */
 import React, {useEffect, useState} from "react";
-import {SafeAreaView, StyleSheet, ScrollView, Text, View, TouchableOpacity} from "react-native";
+import { StyleSheet, ScrollView, Text, View, TouchableOpacity, StatusBar} from "react-native";
 import TextField from "../components/TextField";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
@@ -15,6 +15,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import ClaimModal from "../components/ClaimModal";
 import ItemCard from "../components/ItemCard";
 import {useIsFocused} from "@react-navigation/native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 /**
  * Search screen component
@@ -38,6 +39,26 @@ const Search = ({navigation}) => {
             onClickSearch()
     }, [isFocused, state])
 
+    useEffect(() => {
+        navigation.setOptions({
+
+            header: () => (
+                <View style={styles.searchHeader}>
+                    <TextField
+                        placeholder={"Search..."}
+                        placeholderTextColor={"#989797"}
+                        style={styles.inputStyle} onChangeText={setState}/>
+                    <TouchableOpacity onPress={onClickSearch}>
+                        <Ionicons
+                            name="search"
+                            size={24}
+                            color={'#222222'}
+                        />
+                    </TouchableOpacity>
+                </View>
+            ),
+        })
+    }, [])
     /**
      * onClickSearch
      * Purpose: This function used for calling api(API.SEARCH_ITEM) for searching items
@@ -56,7 +77,7 @@ const Search = ({navigation}) => {
             setItemList(response?.data?.data);
         }
         const getError = (error) => {
-            console.log("error.response.errorCode", error.response.status)
+
             if (error.response.status === 401) {
                 logout()
             }
@@ -72,19 +93,19 @@ const Search = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.searchHeader}>
-                <TextField
-                    placeholder={"Search..."}
-                    placeholderTextColor={"#989797"}
-                    style={styles.inputStyle} onChangeText={setState}/>
-                <TouchableOpacity onPress={onClickSearch}>
-                    <Ionicons
-                        name="search"
-                        size={24}
-                        color={'#222222'}
-                    />
-                </TouchableOpacity>
-            </View>
+            {/*<View style={styles.searchHeader}>*/}
+            {/*    <TextField*/}
+            {/*        placeholder={"Search..."}*/}
+            {/*        placeholderTextColor={"#989797"}*/}
+            {/*        style={styles.inputStyle} onChangeText={setState}/>*/}
+            {/*    <TouchableOpacity onPress={onClickSearch}>*/}
+            {/*        <Ionicons*/}
+            {/*            name="search"*/}
+            {/*            size={24}*/}
+            {/*            color={'#222222'}*/}
+            {/*        />*/}
+            {/*    </TouchableOpacity>*/}
+            {/*</View>*/}
             <ScrollView style={styles.itemContainer}>
                 {!itemList.length && !state ?
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
@@ -94,7 +115,7 @@ const Search = ({navigation}) => {
                             color={'#cfcfcf'}
                         />
                         <Text style={{color: "#cfcfcf"}}>Search the thing you have lost... </Text>
-                    </View>:null}
+                    </View> : null}
                 {!itemList.length && state ?
                     <View style={{justifyContent: "center", alignItems: "center", paddingTop: "30%"}}>
                         <Ionicons
@@ -104,7 +125,7 @@ const Search = ({navigation}) => {
                         />
                         <Text style={{color: "#cfcfcf"}}>Result not available</Text>
                         <Text style={{color: "#cfcfcf"}}>Please search with new keyword</Text>
-                    </View>:null}
+                    </View> : null}
                 <ClaimModal itemData={selectedClaimItem} modalVisible={!!selectedClaimItem} onClose={(refresh) => {
                     setSelectedClaimItem(null)
                     if (refresh)
@@ -133,6 +154,7 @@ const Search = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         width: "100%", flex: 1, alignItems: 'center', justifyContent: 'center',
+        marginTop:StatusBar.currentHeight
     },
     inputStyle: {
         width: "100%",
@@ -142,7 +164,8 @@ const styles = StyleSheet.create({
         height: 40,
         marginRight: 15,
         justifyContent: "center",
-        padding: 20
+        padding: 5,
+        marginHorizontal: 5
     },
     searchHeader: {
         flexDirection: 'row',
@@ -153,7 +176,7 @@ const styles = StyleSheet.create({
         height: 64,
         justifyContent: "center",
         paddingVertical: 12,
-        paddingHorizontal: 20,
+        paddingHorizontal: 40,
     },
     itemContainer: {
         width: "100%",
