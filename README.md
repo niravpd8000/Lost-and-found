@@ -9,21 +9,9 @@
 [//]: # ()
 [//]: # (<h1 align="center" style="color:#fb5b5a">Lost & found</h1>)
 
-<p align="center"><img src="https://i.ibb.co/MsqQDmk/logo.jpg" height="200px"/></p>
+<p align="center"><img src="/assets/logo.jpg" height="200px"/></p>
 
-<p align="center"><img src="https://i.ibb.co/WzSkYpb/1j-oj-VNGOMk-X9-W2-J1iwi-GKhjf6-Crhd-Pn-Qi-Ii-Wcq-L2-VE9-Alom-SUqhf-Fr9w.png" alt="lost & found logo"></p>
-
-[//]: # (<img alt="logo" src="https://i.ibb.co/MsqQDmk/logo.jpg" height="200px" align="right"/>)
-
-[//]: # ()
-[//]: # (<p>)
-
-[//]: # (<img src="https://i.ibb.co/WzSkYpb/1j-oj-VNGOMk-X9-W2-J1iwi-GKhjf6-Crhd-Pn-Qi-Ii-Wcq-L2-VE9-Alom-SUqhf-Fr9w.png" alt="lost & found logo" border="0">)
-
-[//]: # (<br/>)
-
-[//]: # (</p>)
-
+<h1 align="center">Lost & Found</h1>
 <h2 align="center">
 Check often and claim what is yours.
 </h2>
