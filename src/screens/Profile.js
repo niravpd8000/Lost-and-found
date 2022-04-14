@@ -22,7 +22,7 @@ const Profile = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <Image
-                source={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}
+                source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}}
                 style={styles.image}
             />
             <View style={{width: "100%", padding: 20}}>
@@ -34,8 +34,8 @@ const Profile = ({navigation}) => {
                         Listing</CustomButton>
                     <CustomButton onClick={() => navigation.navigate("Claimed Item")} buttonColor="#765050"
                                   contained>Claimed</CustomButton>
-                    <CustomButton onClick={() => navigation.navigate("Edit Profile")}
-                                  buttonColor="#765050" contained>Profile</CustomButton>
+                    {/*<CustomButton onClick={() => navigation.navigate("Edit Profile")}*/}
+                    {/*              buttonColor="#765050" contained>Profile</CustomButton>*/}
                     <CustomButton onClick={logout} buttonColor="#765050" contained>Logout</CustomButton>
                 </View>
             </View>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: -50,
         borderStyle: "solid",
-        borderColor: "white",
+        borderColor: "#765050",
         borderWidth: 5,
         height: 100,
         width: 100,

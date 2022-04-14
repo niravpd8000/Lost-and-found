@@ -5,7 +5,7 @@
  *  date-created: March-30-2022
  *  last-modified: April-08-2022
  */
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     SafeAreaView,
     StyleSheet,
@@ -20,16 +20,19 @@ import ImageUpload from "../components/ImageUpload";
 import {postRequest} from "../API/axios";
 import {API} from "../API/apis";
 import {AuthContext} from "../components/Context";
+import ToastMessage from "../components/ToastMessage";
+import Loading from "../components/Loading";
 
 /**
  * ListItemForm Screen component
  * @returns {JSX.Element}
  * @constructor
  */
-const ListItemForm = ({}) => {
+const ListItemForm = ({navigation}) => {
+    console.log(ListItemForm)
     const [state, setState] = useState({
-        title: "",
-        type: true,
+        title: "Apple airpods lost",
+        itemTypeFound: true,
         images: [
             'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930',
         ],
@@ -42,9 +45,19 @@ const ListItemForm = ({}) => {
         userId: loginState?.userDetails?.id,
         shareContact: true,
     });
-
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     /** fetching states from context*/
     const {logout, loginState} = React.useContext(AuthContext);
+
+
+    useEffect(() => {
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage("")
+            }, 2000)
+        }
+    }, [errorMessage])
 
     /**
      * handleChange
@@ -79,151 +92,175 @@ const ListItemForm = ({}) => {
     const createItem = async () => {
         const getResponse = () => {
             // setList(response?.data?.data);
+            navigation.navigate("Home")
         };
         const getError = (error) => {
-;
+            setErrorMessage(error.response.message);
             if (error.response.status === 401) {
                 logout();
             }
         };
         try {
-            await postRequest(
-                API.CREATE_ITEM,
-                state,
-                getResponse,
-                getError,
-                loginState.accessToken
-            );
+            const {title, place, color, brand, category, subCategory, description} = state;
+            if (title && place && color && brand && category && subCategory && description) {
+                setLoading(true)
+                await postRequest(
+                    API.CREATE_ITEM,
+                    state,
+                    getResponse,
+                    getError,
+                    loginState.accessToken
+                );
+                setLoading(false)
+            } else {
+                if (!title)
+                    alert("Please fill title")
+                else if (!place)
+                    alert("Please select place")
+                else if (!color)
+                    alert("Please select color")
+                else if (!brand)
+                    alert("Please fill brand")
+                else if (!category)
+                    alert("Please select category")
+                else if (!subCategory)
+                    alert("Please select subCategory")
+                else if (!description)
+                    alert("Please fill description")
+                // setErrorMessage("Please fill all required fields")
+            }
         } catch (e) {
             console.log(e);
         }
     };
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.itemContainer}>
-                <View style={styles.box}>
-                    <ImageUpload/>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Title : </Text>
-                    <TextField
-                        onChangeText={(value) => handleChange({name: "title", value})}
-                        style={styles.inputStyle}
-                    />
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Type : </Text>
-                    <Picker
-                        selectedValue={state.type}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "type", value})}
-                    >
-                        <Picker.Item label={"Found"} value={true}/>
-                        <Picker.Item label={"Lost"} value={false}/>
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Brand : </Text>
-                    <TextField
-                        onChangeText={(value) => handleChange({name: "brand", value})}
-                        style={styles.inputStyle}
-                    />
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Place : </Text>
-                    <Picker
-                        selectedValue={state.place}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "place", value})}
-                    >
-                        <Picker.Item label={"Select Place"} value={""}/>
-                        {campusList.map((item, key) => (
-                            <Picker.Item key={key} label={item} value={item}/>
-                        ))}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Color : </Text>
-                    <Picker
-                        selectedValue={state.color}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "color", value})}
-                        itemStyle={{backgroundColor: "black"}}
-                    >
-                        <Picker.Item label={"Select Color"} value={""}/>
-                        {colors.map((item, key) => (
-                            <Picker.Item
-                                color={item.toLowerCase()}
-                                key={key}
-                                label={item}
-                                value={item}
-                            />
-                        ))}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Category : </Text>
-                    <Picker
-                        selectedValue={state.category}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) => handleChange({name: "category", value})}
-                        itemStyle={{backgroundColor: "black"}}
-                    >
-                        <Picker.Item label={"Select Category"} value={""}/>
-                        {Object.keys(categories).length ?
-                            Object.keys(categories).map((item, key) => (
-                                <Picker.Item
-                                    color={item.toLowerCase()}
-                                    key={key}
-                                    label={item}
-                                    value={item}
-                                />
-                            )):null}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Sub Category : </Text>
-                    <Picker
-                        selectedValue={state.subCategory}
-                        style={{height: 50, borderColor: "white", borderRadius: 10}}
-                        onValueChange={(value) =>
-                            handleChange({name: "subCategory", value})
-                        }
-                        itemStyle={{backgroundColor: "black"}}
-                        disabled={!state.category}
-                    >
-                        <Picker.Item label={"Select Sub Category"} value={""}/>
-                        {state.category &&
-                            categories[state.category].length ?
-                            categories[state.category].map((item, key) => (
-                                <Picker.Item
-                                    color={item.toLowerCase()}
-                                    key={key}
-                                    label={item}
-                                    value={item}
-                                />
-                            )):null}
-                    </Picker>
-                </View>
-                <View style={styles.box}>
-                    <Text style={styles.subTitle}>Description : </Text>
-                    <TextField
-                        onChangeText={(value) =>
-                            handleChange({name: "description", value})
-                        }
-                        multiline={true}
-                        numberOfLines={5}
-                        style={styles.textAreaStyle}
-                    />
-                </View>
-                <View style={{alignItems: "center"}}>
-                    <View style={{width: 200}}>
-                        <CustomButton onClick={createItem} contained>
-                            Publish
-                        </CustomButton>
+            {errorMessage ? <ToastMessage message={errorMessage} type={"error"}/> : null}
+            {loading ? <Loading/> :
+                <ScrollView style={styles.itemContainer}>
+                    <View style={styles.box}>
+                        {/*<ImageUpload/>*/}
                     </View>
-                </View>
-            </ScrollView>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Title : </Text>
+                        <TextField
+                            onChangeText={(value) => handleChange({name: "title", value})}
+                            style={styles.inputStyle}
+                        />
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Type : </Text>
+                        <Picker
+                            selectedValue={state.type}
+                            style={{height: 50, borderColor: "white", borderRadius: 10}}
+                            onValueChange={(value) => handleChange({name: "itemTypeFound", value})}
+                        >
+                            <Picker.Item label={"Found"} value={true}/>
+                            <Picker.Item label={"Lost"} value={false}/>
+                        </Picker>
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Brand : </Text>
+                        <TextField
+                            onChangeText={(value) => handleChange({name: "brand", value})}
+                            style={styles.inputStyle}
+                        />
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Place : </Text>
+                        <Picker
+                            selectedValue={state.place}
+                            style={{height: 50, borderColor: "white", borderRadius: 10}}
+                            onValueChange={(value) => handleChange({name: "place", value})}
+                        >
+                            <Picker.Item label={"Select Place"} value={""}/>
+                            {campusList.map((item, key) => (
+                                <Picker.Item key={key} label={item} value={item}/>
+                            ))}
+                        </Picker>
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Color : </Text>
+                        <Picker
+                            selectedValue={state.color}
+                            style={{height: 50, borderColor: "white", borderRadius: 10}}
+                            onValueChange={(value) => handleChange({name: "color", value})}
+                            itemStyle={{backgroundColor: "black"}}
+                        >
+                            <Picker.Item label={"Select Color"} value={""}/>
+                            {colors.map((item, key) => (
+                                <Picker.Item
+                                    color={item.toLowerCase()}
+                                    key={key}
+                                    label={item}
+                                    value={item}
+                                />
+                            ))}
+                        </Picker>
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Category : </Text>
+                        <Picker
+                            selectedValue={state.category}
+                            style={{height: 50, borderColor: "white", borderRadius: 10}}
+                            onValueChange={(value) => handleChange({name: "category", value})}
+                            itemStyle={{backgroundColor: "black"}}
+                        >
+                            <Picker.Item label={"Select Category"} value={""}/>
+                            {Object.keys(categories).length ?
+                                Object.keys(categories).map((item, key) => (
+                                    <Picker.Item
+                                        color={item.toLowerCase()}
+                                        key={key}
+                                        label={item}
+                                        value={item}
+                                    />
+                                )) : null}
+                        </Picker>
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Sub Category : </Text>
+                        <Picker
+                            selectedValue={state.subCategory}
+                            style={{height: 50, borderColor: "white", borderRadius: 10}}
+                            onValueChange={(value) =>
+                                handleChange({name: "subCategory", value})
+                            }
+                            itemStyle={{backgroundColor: "black"}}
+                            disabled={!state.category}
+                        >
+                            <Picker.Item label={"Select Sub Category"} value={""}/>
+                            {state.category &&
+                            categories[state.category].length ?
+                                categories[state.category].map((item, key) => (
+                                    <Picker.Item
+                                        color={item.toLowerCase()}
+                                        key={key}
+                                        label={item}
+                                        value={item}
+                                    />
+                                )) : null}
+                        </Picker>
+                    </View>
+                    <View style={styles.box}>
+                        <Text style={styles.subTitle}>Description : </Text>
+                        <TextField
+                            onChangeText={(value) =>
+                                handleChange({name: "description", value})
+                            }
+                            multiline={true}
+                            numberOfLines={5}
+                            style={styles.textAreaStyle}
+                        />
+                    </View>
+                    <View style={{alignItems: "center"}}>
+                        <View style={{width: 200}}>
+                            <CustomButton onClick={createItem} contained>
+                                Publish
+                            </CustomButton>
+                        </View>
+                    </View>
+                </ScrollView>}
         </SafeAreaView>
     );
 };
@@ -371,7 +408,7 @@ const campusList = [
 ];
 
 const categories = {
-    "Animals & Pet Supplies": ["Live Animals"],
+    "Animals & Pet Supplies": ["Live Animals","Other"],
     "Apparel & Accessories": [
         "Clothing",
         "Clothing Accessories",
@@ -379,16 +416,16 @@ const categories = {
         "Handbag & Wallet Accessories",
         "Jewelry",
         "Shoe Accessories",
-        "Shoes",
+        "Shoes","Other"
     ],
-    "Cameras & Optics": ["Cameras", "Optics", "Photography"],
+    "Cameras & Optics": ["Cameras", "Optics", "Photography","Other"],
     Electronics: [
         "Arcade Equipment",
         "Circuit Boards & Components",
         "Components",
         "Computers",
         "Electronics Accessories",
-        "Smartphone & Accessories",
+        "Smartphone & Accessories","Other"
     ],
     Furniture: [
         "Baby & Toddler Furniture",
@@ -417,7 +454,7 @@ const categories = {
         "Sofa Accessories",
         "Sofas",
         "Table Accessories",
-        "Tables",
+        "Tables","Other"
     ],
     "Home & Garden": [
         "Bathroom Accessories",
@@ -437,7 +474,7 @@ const categories = {
         "Plants",
         "Smoking Accessories",
         "Umbrella Sleeves & Cases",
-        "Wood Stoves",
+        "Wood Stoves","Other"
     ],
     "Luggage & Bags": [
         "Backpacks",
@@ -452,14 +489,14 @@ const categories = {
         "Messenger Bags",
         "Shopping Totes",
         "Suitcases",
-        "Train Cases",
+        "Train Cases","Other"
     ],
     Media: [
         "Books",
         "DVDs",
         "Magazines & Newspapers",
         "Music & Sound Recordings",
-        "Product Manuals",
+        "Product Manuals","Other"
     ],
     "Office Supplies": [
         "Book Accessories",
@@ -475,14 +512,15 @@ const categories = {
         "Office Instruments",
         "Paper Handling",
         "Presentation Supplies",
-        "Shipping Supplies",
+        "Shipping Supplies","Other"
     ],
     "Sporting Goods": [
         "Athletics",
         "Exercise & Fitness",
         "Indoor Games",
-        "Outdoor Recreation",
+        "Outdoor Recreation","Other"
     ],
-    "Toys & Games": ["Games", "Outdoor Play Equipment", "Puzzles", "Toys"],
-    "Vehicles & Parts": ["Vehicle Parts", "Accessories"],
+    "Toys & Games": ["Games", "Outdoor Play Equipment", "Puzzles", "Toys","Other"],
+    "Vehicles & Parts": ["Vehicle Parts", "Accessories","Other"],
+    "Other": ["Other"]
 };
