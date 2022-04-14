@@ -22,20 +22,21 @@ import ToastMessage from "./ToastMessage";
 const Loading = () => {
     /** initialising states and variables */
     return (
-        <View style={styles.container}>
+        <View style={styles.loading}>
             <ActivityIndicator color={"#fb5b5a"}/>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        height: "100%",
-        width: "100%",
-        flex: 1,
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
         alignItems: 'center',
-        justifyContent: "center",
-        position:'absolute'
+        justifyContent: 'center'
     }
 });
 
