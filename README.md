@@ -12,9 +12,6 @@
 <p align="center"><img src="/assets/logo.jpg" height="200px"/></p>
 
 <h1 align="center">Lost & Found</h1>
-<h2 align="center">
-Check often and claim what is yours.
-</h2>
 
 ### Badges
 
